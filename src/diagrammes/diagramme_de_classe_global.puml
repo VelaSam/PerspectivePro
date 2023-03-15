@@ -12,7 +12,7 @@ legend top left
  endlegend
 
 
-abstract class Animal #a2ebaa{
+abstract class Animal #a2ebaa implements Vivant{
     -nombrePattes: int
     -couleur: String
 
@@ -29,6 +29,11 @@ class Bruit #dea2eb {
 
     -sonProduit: String
     +getSonProduit(): String
+}
+
+interface Vivant{
+
+    -isBreathing: boolean
 }
 
 
