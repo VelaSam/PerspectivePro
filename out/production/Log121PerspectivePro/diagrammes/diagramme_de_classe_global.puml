@@ -80,9 +80,9 @@ legend top left
 
     }
 
-    class ImageView #a2c5eb implements Subject{
+    class Image #a2c5eb implements Subject{
 
-        -image: Image
+        -path: String
     }
 
     class Controleur #dea2eb{
@@ -102,7 +102,7 @@ legend top left
     Subject o-- Observer
 
     ModeleSingleton o-u- Perspective
-    ModeleSingleton o-u- ImageView
+    ModeleSingleton o-u- Image
 
     ModeleSingleton <-- Controleur: modifie
     Vue -up- Controleur
@@ -118,6 +118,13 @@ legend top left
 @enduml
 
 Command = Invoker
+Perspective = Panel
 
 Chaque panneau va chercher du modele 
 les informations de sa perspective respective
+
+L'image implémente Subject car durant lexecution
+lutilisateur doit pouvoir changer l'image quand qu'il veut
+
+Perspective implémente Subject pour actualiser le tout lors 
+des Commandes 
