@@ -5,40 +5,126 @@ skinparam backgroundColor #EEEBDC
 
 legend top left
  |= Color  |= Package |
- |<back:#a2ebaa>   </back>| Package1 |
- |<back:#a2c5eb>   </back>| Package2 |
- |<back:#dea2eb>   </back>| Package3 |
-
+ |<back:#a2c5eb>   </back>| Modele |
+ |<back:#42b883>   </back>| Vue |
+ |<back:#dea2eb>   </back>| Controleur |
+ |<back:#FEFFA5>   </back>| Observer |
+ |<back:#F5B0CB>   </back>| Commande |
  endlegend
 
 
-abstract class Animal #a2ebaa implements Vivant{
-    -nombrePattes: int
-    -couleur: String
-
-    #faireBruit(): Bruit
-    +marcher()
-}
 
 
-class Dog #a2c5eb extends Animal {
-    +aboyer(): Bruit
-}
+    '----------OBSERVER--------------'
+    interface Observer #FEFFA5{
+        +update(args)
+    }
 
-class Bruit #dea2eb {
+    interface Subject #FEFFA5{
+        -observers: Observer[]
+        -mainState
 
-    -sonProduit: String
-    +getSonProduit(): String
-}
+        +attachObserver(o: Observer)
+        +detachObserver(o: Observer)
+        +notifySubscribers()
 
-interface Vivant{
-
-    -isBreathing: boolean
-}
+    }
+    '-----------OBSERVER--------------'
 
 
-Animal --r-> Bruit
-Dog -up--o Bruit
 
+    '-----------COMMAND--------------'
+    interface Commande #F5B0CB {
+        +execute()
+    }
+
+    class CommandTranslate #F5B0CB implements Commande{
+        +execute()
+   
+    }
+
+    class CommandZoomIn #F5B0CB implements Commande{
+        +execute()
+   
+    }
+
+    class CommandZoomOut #F5B0CB implements Commande{
+        +execute()
+   
+    }
+
+    class CommandUndo #F5B0CB implements Commande{
+        +execute()
+    }
+    
+    class CommandSauvegarder #F5B0CB implements Commande{
+        +execute()
+    }
+
+    class CommandCharger #F5B0CB implements Commande{
+        +execute()
+    }
+    
+    '-----------COMMAND--------------'
+
+
+
+    class ModeleSingleton #a2c5eb {
+        -instance: ModeleSingleton
+
+        -ModeleSingleton()
+        + {static} getInstance(): ModeleSingleton;
+    }
+
+    class Perspective #a2c5eb implements Subject{
+
+    }
+
+    class Image #a2c5eb implements Subject{
+
+        -path: String
+    }
+
+    class Controleur #dea2eb{
+
+        -command: Commande
+        +setCommand(c: Commande)
+        +executeCommand()
+
+
+    }
+
+    class Vue #42b883 implements Observer {}
+
+
+
+
+    Subject o-- Observer
+
+    ModeleSingleton o-u- Perspective
+    ModeleSingleton o-u- Image
+
+    ModeleSingleton <-- Controleur: modifie
+    Vue -up- Controleur
+
+    Vue <-- ModeleSingleton: avertit
+    Vue --> ModeleSingleton: lit les parametres
+
+
+    Commande -l-o Controleur 
+
+    Commande ----> ModeleSingleton : execute
 
 @enduml
+
+Command = Invoker
+Perspective = Panel
+
+Chaque panneau va chercher du modele 
+les informations de sa perspective respective
+
+L'image implémente Subject car durant lexecution
+lutilisateur doit pouvoir changer l'image quand qu'il veut
+
+Perspective implémente Subject pour actualiser le tout lors 
+des Commandes 
