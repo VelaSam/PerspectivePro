@@ -2,13 +2,15 @@ package exemples_demos.maquette;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.util.concurrent.atomic.AtomicReference;
+
+
+public class Executionneur extends Application {
 
 
     public static void main(String[] args) {
@@ -37,7 +39,7 @@ public class Main extends Application {
 
 
 
-        Scene mainScene = new Scene(root,1000,600);
+        Scene mainScene = new Scene(root,1500,800);
 
         primaryStage.setScene(mainScene);
         primaryStage.sizeToScene();
@@ -68,19 +70,57 @@ public class Main extends Application {
         Background paneBackground = new Background(new BackgroundFill(Color.RED, null, null));
 
 
+        ImageView currentImageView = new ImageView("banque_images/kitty.jpg");
+
+
+
 
         public PanneauDImage(String message) {
 
-            this.setWidth(300);
-            this.setHeight(200);
+
+            this.setPrefSize(600,800);
+            this.setMaxSize(600,800);
+
+
+
             this.setBorder(paneBorder);
             this.setBackground(paneBackground);
+            this.getChildren().add(currentImageView);
+
+
+
+
+            AtomicReference<Double> ecartH = new AtomicReference<>((double) 0);
+            AtomicReference<Double> ecartV = new AtomicReference<>((double) 0);
+
+            currentImageView.setOnMousePressed(event -> {
+                ecartH.set(currentImageView.getX() - event.getX());
+                ecartV.set(currentImageView.getY() - event.getY());
+
+
+
+
+                this.setOnMouseDragged(e -> {
+
+                    currentImageView.setX(e.getX()+ecartH.get());
+                    currentImageView.setY(e.getY()+ecartV.get());
+                    currentImageView.setTranslateX(currentImageView.getX());
+                    currentImageView.setTranslateY(currentImageView.getY());
+
+                });
+            });
+
+
+
+
+
+
 
 
         }
+
+
+
+
     }
 }
-
-
-
-
