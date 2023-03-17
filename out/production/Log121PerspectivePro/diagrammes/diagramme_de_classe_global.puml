@@ -68,6 +68,21 @@ legend top left
     '-----------COMMAND--------------'
 
 
+    '-----------SINGLETON--------------'
+
+
+    class GestionnaireCommande #dea2eb{
+        -instance: GestionnaireCommande
+        -pileDeCommande: Stack<Commande>
+        
+
+        -GestionnaireCommande()
+        + {static} getInstance(): GestionnaireCommande
+
+
+    } 
+    '-----------SINGLETON--------------'
+
 
     class ModeleSingleton #a2c5eb {
         -instance: ModeleSingleton
@@ -76,23 +91,32 @@ legend top left
         + {static} getInstance(): ModeleSingleton;
     }
 
+
+    class ModeleVignette{}
+
     class Perspective #a2c5eb implements Subject{
 
     }
 
-    class ImageView #a2c5eb implements Subject{
+    class Image #a2c5eb implements Subject{
 
-        -image: Image
+        -path: String
     }
 
     class Controleur #dea2eb{
 
         -command: Commande
+
         +setCommand(c: Commande)
         +executeCommand()
 
-
     }
+
+
+    Controleur -> GestionnaireCommande : utilise
+
+
+    GestionnaireCommande o-- Commande
 
     class Vue #42b883 implements Observer {}
 
@@ -101,8 +125,8 @@ legend top left
 
     Subject o-- Observer
 
-    ModeleSingleton o-u- Perspective
-    ModeleSingleton o-u- ImageView
+    ModeleSingleton o-l- Perspective
+    ModeleSingleton o-l- Image
 
     ModeleSingleton <-- Controleur: modifie
     Vue -up- Controleur
@@ -110,14 +134,18 @@ legend top left
     Vue <-- ModeleSingleton: avertit
     Vue --> ModeleSingleton: lit les parametres
 
-
-    Commande -l-o Controleur 
-
     Commande ----> ModeleSingleton : execute
 
 @enduml
 
 Command = Invoker
+Perspective = Panel
 
 Chaque panneau va chercher du modele 
 les informations de sa perspective respective
+
+L'image implémente Subject car durant lexecution
+lutilisateur doit pouvoir changer l'image quand qu'il veut
+
+Perspective implémente Subject pour actualiser le tout lors 
+des Commandes 
