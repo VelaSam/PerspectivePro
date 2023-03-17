@@ -51,10 +51,7 @@ public class Executionneur extends Application {
 
 
     private class CenterPanels extends HBox{
-
-
         Background panelsBackground = new Background(new BackgroundFill(Color.YELLOW, null, null));
-
 
         CenterPanels(){
             this.setSpacing(10);

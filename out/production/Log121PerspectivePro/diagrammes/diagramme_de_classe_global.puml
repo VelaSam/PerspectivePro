@@ -68,6 +68,21 @@ legend top left
     '-----------COMMAND--------------'
 
 
+    '-----------SINGLETON--------------'
+
+
+    class GestionnaireCommande #dea2eb{
+        -instance: GestionnaireCommande
+        -pileDeCommande: Stack<Commande>
+        
+
+        -GestionnaireCommande()
+        + {static} getInstance(): GestionnaireCommande
+
+
+    } 
+    '-----------SINGLETON--------------'
+
 
     class ModeleSingleton #a2c5eb {
         -instance: ModeleSingleton
@@ -75,6 +90,9 @@ legend top left
         -ModeleSingleton()
         + {static} getInstance(): ModeleSingleton;
     }
+
+
+    class ModeleVignette{}
 
     class Perspective #a2c5eb implements Subject{
 
@@ -88,11 +106,17 @@ legend top left
     class Controleur #dea2eb{
 
         -command: Commande
+
         +setCommand(c: Commande)
         +executeCommand()
 
-
     }
+
+
+    Controleur -> GestionnaireCommande : utilise
+
+
+    GestionnaireCommande o-- Commande
 
     class Vue #42b883 implements Observer {}
 
@@ -101,17 +125,14 @@ legend top left
 
     Subject o-- Observer
 
-    ModeleSingleton o-u- Perspective
-    ModeleSingleton o-u- Image
+    ModeleSingleton o-l- Perspective
+    ModeleSingleton o-l- Image
 
     ModeleSingleton <-- Controleur: modifie
     Vue -up- Controleur
 
     Vue <-- ModeleSingleton: avertit
     Vue --> ModeleSingleton: lit les parametres
-
-
-    Commande -l-o Controleur 
 
     Commande ----> ModeleSingleton : execute
 
