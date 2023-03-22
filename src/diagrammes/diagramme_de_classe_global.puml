@@ -121,8 +121,8 @@ legend top left
         -zoomPourcentage: double
 
 
-        +Translate(x:double, y:double)
-        +Zoom(pourcentage: double)
+        +translate(x:double, y:double)
+        +zoom(pourcentage: double)
 
     }
 

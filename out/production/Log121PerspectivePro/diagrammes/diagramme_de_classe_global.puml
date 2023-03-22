@@ -10,6 +10,8 @@ legend top left
  |<back:#dea2eb>   </back>| Controleur |
  |<back:#FEFFA5>   </back>| Observer |
  |<back:#F5B0CB>   </back>| Commande |
+ |<back:#2CEAA3>   </back>| Memento |
+
  endlegend
 
 
@@ -56,14 +58,7 @@ legend top left
     class CommandUndo #F5B0CB implements Commande{
         +execute()
     }
-    
-    class CommandSauvegarder #F5B0CB implements Commande{
-        +execute()
-    }
 
-    class CommandCharger #F5B0CB implements Commande{
-        +execute()
-    }
     
     '-----------COMMAND--------------'
 
@@ -73,28 +68,61 @@ legend top left
 
     class GestionnaireCommande #dea2eb{
         -instance: GestionnaireCommande
-        -pileDeCommande: Stack<Commande>
+        -pileDeCommande: Stack<Memento>
         
 
         -GestionnaireCommande()
         + {static} getInstance(): GestionnaireCommande
-
+        
+        +undo()
 
     } 
     '-----------SINGLETON--------------'
 
+    '-----------MEMENTO--------------'
 
-    class ModeleSingleton #a2c5eb {
-        -instance: ModeleSingleton
+    'Originator = CurrentProjectState'
+    'Caretaker = GestionnaireDeCommande'
 
-        -ModeleSingleton()
-        + {static} getInstance(): ModeleSingleton;
+
+    class Memento #2CEAA3{
+
+        {static}+PERSPECTIVE_CENTRE
+        {static}+PERSPECTIVE_DROITE
+
+        -perspectiveCentre: Perspective
+        -perspectiveDroite: Perspective
+
+        +Memento(centre: Perspective, droite: Perspective)
+        +getState(): Perspective[]
+    }
+
+    
+    '-----------MEMENTO--------------'
+
+
+
+    class CurrentProjectState #a2c5eb implements Subject {
+
+        -image: Image
+        -perspectiveMilieu: Perspective
+        -perspectiveDroite: Perspective
+        
+        +save(): Memento
+        +restore(m: Memento)
     }
 
 
-    class ModeleVignette{}
-
     class Perspective #a2c5eb implements Subject{
+        
+        -imageView: ImageView
+        -positionX: double
+        -positionY: double
+        -zoomPourcentage: double
+
+
+        +Translate(x:double, y:double)
+        +Zoom(pourcentage: double)
 
     }
 
@@ -106,35 +134,81 @@ legend top left
     class Controleur #dea2eb{
 
         -command: Commande
-
         +setCommand(c: Commande)
         +executeCommand()
+
+        +initSauvegarde()
+    }
+
+
+    class VerticalBoxPrincipal #42b883 {
+
+        -panneauDImages: HBox
+        -panneauGauche: PanneauStatique
+        -panneauMilieu: PanneauDynamique
+        -panneauDroite: PanneauDynamique
+
+        -barreSelection: MenuBar
+
+        -boutonSauvegarde: MenuItem
+        -boutonCharger: MenuItem
+
+        -boutonUndo: Button
+        -boutonRedo: Button
 
     }
 
 
-    Controleur -> GestionnaireCommande : utilise
+    class PanneauStatique #42b883 implements Observer{
+
+        -image: Image
+        -imageView: ImageView
+    }
+
+    class PanneauDynamique #42b883 implements Observer{
+
+        -image: Image
+        -perspective: Perspective
 
 
-    GestionnaireCommande o-- Commande
-
-    class Vue #42b883 implements Observer {}
 
 
+    }
+
+   
+
+   Observer -o Subject
+   Controleur -l-> GestionnaireCommande : Utilise
+   CurrentProjectState <-- Controleur : Modifie
+   Perspective <-- Controleur : Modifie
+   Image <- Controleur : Modifie
+   Controleur o-- Commande
+
+   VerticalBoxPrincipal o-- PanneauDynamique
+   VerticalBoxPrincipal o-up- PanneauStatique
+
+   CurrentProjectState o- Perspective
+   CurrentProjectState o- Image
+
+   VerticalBoxPrincipal -- Controleur
+
+   Memento ---o GestionnaireCommande
+   CurrentProjectState --> Memento
+
+   
+   PanneauDynamique o-- Image
+   Image --> PanneauDynamique
+   
+   PanneauDynamique o-- Perspective
+
+   PanneauStatique o- Image
+   
 
 
-    Subject o-- Observer
 
-    ModeleSingleton o-l- Perspective
-    ModeleSingleton o-l- Image
 
-    ModeleSingleton <-- Controleur: modifie
-    Vue -up- Controleur
 
-    Vue <-- ModeleSingleton: avertit
-    Vue --> ModeleSingleton: lit les parametres
 
-    Commande ----> ModeleSingleton : execute
 
 @enduml
 
