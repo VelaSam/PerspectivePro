@@ -118,21 +118,45 @@ public class Maquette extends Application {
             AtomicReference<Double> ecartH = new AtomicReference<>((double) 0);
             AtomicReference<Double> ecartV = new AtomicReference<>((double) 0);
 
+
             currentImageView.setOnMousePressed(event -> {
-                ecartH.set(currentImageView.getX() - event.getX());
-                ecartV.set(currentImageView.getY() - event.getY());
+//                double ecartX =currentImageView.getX()-event.getX();
+//                double ecartY =currentImageView.getY()-event.getY();
+                ecartH.set(currentImageView.getX()-event.getX());
+                ecartV.set(currentImageView.getY()-event.getY());
 
 
+            });
+
+            currentImageView.setOnMouseDragged(e -> {
+                double positionX = e.getX()+ecartH.get();
+                double positionY = e.getY()+ecartV.get();
+                double ecartX =currentImageView.getX()-e.getX();
+                double ecartY =currentImageView.getY()-e.getY();
+//                System.out.println("ecartH: "+ecartH.get());
+//                System.out.println("ecartV: "+ecartV.get());
+//                System.out.println("eX: "+e.getX());
+//                System.out.println("eY: "+e.getY());
+                System.out.println("X: "+ positionX );
+                System.out.println("Y: "+ positionY);
+//                System.out.println("-------------------fin");
+                if(positionX >= 0 ){
+                    currentImageView.setX(positionX);
+                }else{
+
+                    ecartH.set(ecartX);
+                }
 
 
-                this.setOnMouseDragged(e -> {
+                if(positionY>=0){
+                    currentImageView.setY(positionY);
+                }else{
+                    ecartV.set(ecartY);
+                }
 
-                    currentImageView.setX(e.getX()+ecartH.get());
-                    currentImageView.setY(e.getY()+ecartV.get());
-                    currentImageView.setTranslateX(currentImageView.getX());
-                    currentImageView.setTranslateY(currentImageView.getY());
+//                currentImageView.setTranslateX(positionX);
+//                currentImageView.setTranslateY(positionY);
 
-                });
             });
 
 

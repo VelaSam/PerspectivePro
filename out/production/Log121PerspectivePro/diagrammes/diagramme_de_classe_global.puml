@@ -58,8 +58,11 @@ legend top left
     class CommandUndo #F5B0CB implements Commande{
         +execute()
     }
+    class CommandRedo #F5B0CB implements Commande{
+        +execute()
+    }
 
-    
+
     '-----------COMMAND--------------'
 
 
@@ -69,14 +72,15 @@ legend top left
     class GestionnaireCommande #dea2eb{
         -instance: GestionnaireCommande
         -pileDeCommande: Stack<Memento>
-        
+        -pileDeUndo  : Stack<Memento>
+
 
         -GestionnaireCommande()
         + {static} getInstance(): GestionnaireCommande
-        
-        +undo()
 
-    } 
+        +undo() : Memento
+
+    }
     '-----------SINGLETON--------------'
 
     '-----------MEMENTO--------------'
@@ -87,34 +91,40 @@ legend top left
 
     class Memento #2CEAA3{
 
-        {static}+PERSPECTIVE_CENTRE
-        {static}+PERSPECTIVE_DROITE
+        '{static}+PERSPECTIVE_CENTRE
+        '{static}+PERSPECTIVE_DROITE
 
-        -perspectiveCentre: Perspective
+        -image: currentProjectImage
+        -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
 
-        +Memento(centre: Perspective, droite: Perspective)
-        +getState(): Perspective[]
+        'Constructeur'
+        +Memento(image, perspectiveMilieu, perspectiveDroite)
+        'Getters du memento'
+        +getImage()
+        +getPerspectiveMilieu()
+        +getPerspectiveDroite()
     }
 
-    
+
     '-----------MEMENTO--------------'
 
 
 
     class CurrentProjectState #a2c5eb implements Subject {
 
-        -image: Image
+        -image: currentProjectImage
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
-        
-        +save(): Memento
-        +restore(m: Memento)
+
+        +makeMemento()
+        +restore(m : Memento)
+        'restore() vas appeler undo() Gestionnaire Commande
     }
 
 
     class Perspective #a2c5eb implements Subject{
-        
+
         -imageView: ImageView
         -positionX: double
         -positionY: double
@@ -175,7 +185,7 @@ legend top left
 
     }
 
-   
+
 
    Observer -o Subject
    Controleur -l-> GestionnaireCommande : Utilise
@@ -195,13 +205,15 @@ legend top left
    Memento ---o GestionnaireCommande
    CurrentProjectState --> Memento
 
-   
+
    PanneauDynamique o-- Image
    Image --> PanneauDynamique
-   
+
    PanneauDynamique o-- Perspective
 
    PanneauStatique o- Image
+
+   CurrentProjectState --> GestionnaireCommande : Utilise
    
 
 
