@@ -94,10 +94,16 @@ legend top left
         '{static}+PERSPECTIVE_CENTRE
         '{static}+PERSPECTIVE_DROITE
 
-        -cps : CurrentProjectState
+        -image: currentProjectImage
+        -perspectiveMilieu: Perspective
+        -perspectiveDroite: Perspective
 
-        +Memento(cps : CurrentProjectState)
-        +getState() : CurrentProjectState
+        'Constructeur'
+        +Memento(image, perspectiveMilieu, perspectiveDroite)
+        'Getters du memento'
+        +getImage()
+        +getPerspectiveMilieu()
+        +getPerspectiveDroite()
     }
 
 
@@ -111,8 +117,8 @@ legend top left
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
 
-        +save(): Memento
-        +restore()
+        +makeMemento()
+        +restore(m : Memento)
         'restore() vas appeler undo() Gestionnaire Commande
     }
 
