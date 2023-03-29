@@ -2,8 +2,7 @@ package logiciel.modele;
 
 import javafx.scene.image.ImageView;
 
-public class Perspective implements Cloneable {
-
+public class Perspective {
 
     private ImageView imageView;
     private double positionX;
@@ -17,8 +16,16 @@ public class Perspective implements Cloneable {
         zoomPourcentage = 100;
     }
 
-    public Perspective clone() throws CloneNotSupportedException {
-        return (Perspective)super.clone();
+    public Perspective clone() {
+
+        ImageView newImageView = new ImageView(this.imageView.getImage());
+
+        Perspective newPerspective = new Perspective(newImageView);
+        newPerspective.setPositionX(this.positionX);
+        newPerspective.setPositionY(this.positionY);
+        newPerspective.setZoomPourcentage(this.zoomPourcentage);
+
+        return newPerspective;
     }
 
     public ImageView getImageView() {
