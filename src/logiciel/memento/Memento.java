@@ -6,33 +6,48 @@ import logiciel.modele.Perspective;
 
 public class Memento {
 
+    Image currentProjectImage;
+    Perspective perspectiveMilieu;
+    Perspective perspectiveDroite;
 
-    CurrentProjectState cps;
+    /*
 
-    public Memento(CurrentProjectState cps) {
-        this.cps = cps;
+        '{static}+PERSPECTIVE_CENTRE
+        '{static}+PERSPECTIVE_DROITE
+
+        -image: currentProjectImage
+        -perspectiveMilieu: Perspective
+        -perspectiveDroite: Perspective
+
+        'Constructeur'
+        +Memento(image, perspectiveMilieu, perspectiveDroite)
+        'Getters du memento'
+        +getImage()
+        +getPerspectiveMilieu()
+        +getPerspectiveDroite()
+     */
+
+
+    public Memento(Image currentProjectImage, Perspective perspectiveMilieu, Perspective perspectiveDroite) throws CloneNotSupportedException {
+
+        this.currentProjectImage = currentProjectImage.clone();
+        this.perspectiveMilieu = perspectiveMilieu.clone();
+        this.perspectiveDroite = perspectiveDroite.clone();
+
+
     }
 
-    public Memento(Image currentProjectImage, Perspective perspectiveMilieu, Perspective perspectiveDroite){
 
-        //TODO: GROS PROBLEME MEMENTO ONT TT LES MEME REFERENCE. ON VEUT PASSER PAR COPIE ET NON PAS REFERENCE
-
-        this.cps = new CurrentProjectState(currentProjectImage, perspectiveDroite, perspectiveMilieu);
-
+    public Image getCurrentProjectImage() {
+        return currentProjectImage;
     }
 
-    public CurrentProjectState getCps() {
-        return cps;
+    public Perspective getPerspectiveMilieu() {
+        return perspectiveMilieu;
     }
 
-    public void setCps(CurrentProjectState cps) {
-        this.cps = cps;
-    }
-
-    public CurrentProjectState getState(){
-
-        return this.cps;
-
+    public Perspective getPerspectiveDroite() {
+        return perspectiveDroite;
     }
 }
 

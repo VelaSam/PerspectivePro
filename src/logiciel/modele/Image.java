@@ -1,6 +1,6 @@
 package logiciel.modele;
 
-public class Image extends javafx.scene.image.Image {
+public class Image extends javafx.scene.image.Image implements Cloneable {
 
     private String path;
 
@@ -11,5 +11,8 @@ public class Image extends javafx.scene.image.Image {
         this.path = path;
     }
 
+    public Image clone() throws CloneNotSupportedException {
+        return (Image) super.clone();
+    }
 
 }
