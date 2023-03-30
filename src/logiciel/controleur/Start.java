@@ -28,12 +28,12 @@ public class Start extends Application {
         primaryStage.setTitle("PerspectivePro");
         primaryStage.getIcons().add(new Image("file:icon.png"));
 
-        File imageBase = new File(System.getProperty("user.dir")+ "\\banque_images\\kitty.jpg");
-        //imageBase.toURI().toURL().toExternalForm()
-        ImageContainer imageCIdle = new ImageContainer("banque_images\\kitty.jpg");
 
-        ImageView imageVMilieu = new ImageView("banque_images\\kitty.jpg");
-        ImageView imageVDroite = new ImageView("banque_images\\kitty.jpg");
+        System.out.println(System.getProperty("user.dir")+"\\src\\banque_images\\kitty.jpg");
+        ImageContainer imageCIdle = new ImageContainer(System.getProperty("user.dir")+"\\src\\banque_images\\kitty.jpg");
+
+        ImageView imageVMilieu = new ImageView("\\banque_images\\kitty.jpg");
+        ImageView imageVDroite = new ImageView("\\banque_images\\kitty.jpg");
 
         Perspective perspectiveMilieu = new Perspective(imageVMilieu);
         Perspective perspectiveDroite = new Perspective(imageVDroite);

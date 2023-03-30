@@ -1,5 +1,5 @@
-package logiciel.Observateur;
+package logiciel.observateur;
 
 public interface Observer {
-    public void update(Subject s);
+   void update(Subject s);
 }

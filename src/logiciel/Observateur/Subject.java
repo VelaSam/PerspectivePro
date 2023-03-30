@@ -1,4 +1,4 @@
-package logiciel.Observateur;
+package logiciel.observateur;
 
 import java.util.ArrayList;
 
