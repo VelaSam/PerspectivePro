@@ -30,7 +30,7 @@ public class Perspective extends Subject {
     }
 
     public void changeImage(String path){
-        this.imageView = new ImageView(path);
+        this.imageView = new ImageView("file:/"+path);
         super.notifyObservers();
     }
 

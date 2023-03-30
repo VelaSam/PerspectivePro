@@ -15,7 +15,7 @@ public class ImageContainer  extends Subject {
 
     public ImageContainer(String path) {
         this.path = path;
-        this.image = new ImageView(this.path);
+        this.image = new ImageView("file:/"+this.path);
     }
 
     public ImageContainer clone() {
@@ -23,14 +23,9 @@ public class ImageContainer  extends Subject {
     }
     public void changeImage(String path){
 
-        try {
-            File file = new File(path);
-            this.image = new ImageView(file.toURI().toURL().toExternalForm());
+            this.image = new ImageView("file:/"+path);
             this.path = path;
-        }catch(Exception e){
 
-            System.out.println("Mauvaise image");
-        }
 
         this.notifyObservers();
 
