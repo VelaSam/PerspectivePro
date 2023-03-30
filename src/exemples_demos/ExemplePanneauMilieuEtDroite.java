@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ExemplePanneauGauche extends Application {
+public class ExemplePanneauMilieuEtDroite extends Application {
 
     private static final String[] IMAGE_FILENAMES = {
             "banque_images/flower.png",
