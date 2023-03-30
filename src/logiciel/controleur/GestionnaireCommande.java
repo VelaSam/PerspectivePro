@@ -1,27 +1,29 @@
 package logiciel.controleur;
 
 import logiciel.memento.Memento;
+import logiciel.modele.CurrentProjectState;
 
 import java.util.Stack;
 
 public class GestionnaireCommande {
 
-    private GestionnaireCommande instance;
+    private static GestionnaireCommande instance;
     private Stack<Memento> pileDeCommande;
     //a chaque fois quon exectue une autre action a lexterieur de undo/redo, on vide la pile
     private Stack<Memento> pileDeUndo;
+    private CurrentProjectState cps;
 
 
     private GestionnaireCommande(){
         //TODO: Faire constructeur
     }
 
-    public GestionnaireCommande getInstance(){
+    public static GestionnaireCommande getInstance(){
 
         if(instance == null){
             return new GestionnaireCommande();
         }
-        return this.instance;
+        return instance;
 
     }
 
@@ -30,6 +32,31 @@ public class GestionnaireCommande {
     }
 
 
+    public static void setInstance(GestionnaireCommande instance) {
+        GestionnaireCommande.instance = instance;
+    }
 
+    public Stack<Memento> getPileDeCommande() {
+        return pileDeCommande;
+    }
 
+    public void setPileDeCommande(Stack<Memento> pileDeCommande) {
+        this.pileDeCommande = pileDeCommande;
+    }
+
+    public Stack<Memento> getPileDeUndo() {
+        return pileDeUndo;
+    }
+
+    public void setPileDeUndo(Stack<Memento> pileDeUndo) {
+        this.pileDeUndo = pileDeUndo;
+    }
+
+    public CurrentProjectState getCps() {
+        return cps;
+    }
+
+    public void setCps(CurrentProjectState cps) {
+        this.cps = cps;
+    }
 }
