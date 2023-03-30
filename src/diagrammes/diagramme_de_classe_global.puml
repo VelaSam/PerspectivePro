@@ -11,6 +11,7 @@ legend top left
  |<back:#FEFFA5>   </back>| Observer |
  |<back:#F5B0CB>   </back>| Commande |
  |<back:#2CEAA3>   </back>| Memento |
+ |<back:#7287DF>   </back>| Strategy |
 
  endlegend
 
@@ -19,16 +20,16 @@ legend top left
 
     '----------OBSERVER--------------'
     interface Observer #FEFFA5{
-        +update(args)
+        +update(args: Subject)
     }
 
     interface Subject #FEFFA5{
-        -observers: Observer[]
+        -observers: Observer<>
         -mainState
 
         +attachObserver(o: Observer)
         +detachObserver(o: Observer)
-        +notifySubscribers()
+        +notifyObservers()
 
     }
     '-----------OBSERVER--------------'
@@ -58,7 +59,16 @@ legend top left
     class CommandUndo #F5B0CB implements Commande{
         +execute()
     }
+
     class CommandRedo #F5B0CB implements Commande{
+        +execute()
+    }
+
+    class CommandSetMilieu #F5B0CB implements Commande{
+        +execute()
+    }
+
+    class CommandSetDroite #F5B0CB implements Commande{
         +execute()
     }
 
@@ -71,6 +81,7 @@ legend top left
 
     class GestionnaireCommande #dea2eb{
         -instance: GestionnaireCommande
+        -cps: currentProjectState
         -pileDeCommande: Stack<Memento>
         -pileDeUndo  : Stack<Memento>
 
@@ -113,6 +124,7 @@ legend top left
 
     class CurrentProjectState #a2c5eb implements Subject {
 
+        -currentPerspective: int
         -image: currentProjectImage
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
@@ -177,16 +189,29 @@ legend top left
 
     class PanneauDynamique #42b883 implements Observer{
 
+        -currentStrategy: Strategy
+        -setStrategy: Strategy
         -image: Image
         -perspective: Perspective
+    }
 
+    interface StrategyHover #7287DF {
 
+        +setHover()
+    }
 
+    class StrategyHoverMilieu #7287DF implements StrategyHover {
 
+        +setHover()
+    }
+
+    class StrategyHoverDroite #7287DF implements StrategyHover{
+
+        +setHover()
     }
 
 
-
+    PanneauDynamique o- StrategyHover
    Observer -o Subject
    Controleur -l-> GestionnaireCommande : Utilise
    CurrentProjectState <-- Controleur : Modifie
