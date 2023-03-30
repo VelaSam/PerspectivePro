@@ -1,19 +1,26 @@
 package logiciel.vue;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logiciel.modele.Image;
 import logiciel.modele.Perspective;
+
+import java.io.File;
 
 public class VerticalBoxPrincipal extends VBox {
 
@@ -23,8 +30,9 @@ public class VerticalBoxPrincipal extends VBox {
     private PanneauDynamique panneauMilieu;
     private PanneauDynamique panneauDroite;
     private MenuBar barreSelection;
-    private Menu boutonSauvegarde;
-    private Menu boutonCharger;
+    private Menu file;
+    private MenuItem boutonSauvegarde;
+    private MenuItem boutonCharger;
 
     private HBox sectionBas;
     private Button boutonUndo;
@@ -39,10 +47,12 @@ public class VerticalBoxPrincipal extends VBox {
         this.setPadding(new Insets(5, 20, 20, 20));
 
         barreSelection = new MenuBar();
-        boutonCharger = new Menu("Charger");
-        boutonSauvegarde = new Menu("Sauvegarder");
+        file = new Menu("File");
+        boutonCharger = new MenuItem("Charger");
+        boutonSauvegarde = new MenuItem("Sauvegarder");
 
-        barreSelection.getMenus().addAll(boutonSauvegarde,boutonCharger);
+        file.getItems().addAll(boutonSauvegarde,boutonCharger);
+        barreSelection.getMenus().add(file);
 
         //TODO: METTRE DES VRAIS IMAGES, IMAGEVIEW ET PERSPECTIVES
         panneauGauche = new PanneauStatique(new Image("banque_images/kitty.jpg"), new ImageView());
@@ -72,10 +82,50 @@ public class VerticalBoxPrincipal extends VBox {
         primaryStage.sizeToScene();
         primaryStage.show();
 
+
+
     }
 
 
-    public Menu getBoutonCharger() {
+
+
+    public HBox getPanneauDImages() {
+        return panneauDImages;
+    }
+
+    public PanneauStatique getPanneauGauche() {
+        return panneauGauche;
+    }
+
+    public PanneauDynamique getPanneauMilieu() {
+        return panneauMilieu;
+    }
+
+    public PanneauDynamique getPanneauDroite() {
+        return panneauDroite;
+    }
+
+    public MenuBar getBarreSelection() {
+        return barreSelection;
+    }
+
+    public MenuItem getBoutonSauvegarde() {
+        return boutonSauvegarde;
+    }
+
+    public MenuItem getBoutonCharger() {
         return boutonCharger;
+    }
+
+    public HBox getSectionBas() {
+        return sectionBas;
+    }
+
+    public Button getBoutonUndo() {
+        return boutonUndo;
+    }
+
+    public Button getBoutonRedo() {
+        return boutonRedo;
     }
 }

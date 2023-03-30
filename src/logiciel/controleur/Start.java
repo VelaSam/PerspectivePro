@@ -8,6 +8,7 @@ import logiciel.vue.VerticalBoxPrincipal;
 public class Start extends Application {
 
     private VerticalBoxPrincipal verticalBoxPrincipal;
+    private Controleur controler;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,6 +21,8 @@ public class Start extends Application {
         primaryStage.getIcons().add(new Image("file:icon.png"));
 
         verticalBoxPrincipal = new VerticalBoxPrincipal(primaryStage);
+        controler = new Controleur(verticalBoxPrincipal);
+
 
 
 
