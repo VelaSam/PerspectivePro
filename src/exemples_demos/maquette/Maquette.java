@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Maquette extends Application {
 
-
     public static void main(String[] args) {
         launch(args);
     }

@@ -1,9 +1,10 @@
 package logiciel.vue;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import logiciel.modele.Image;
 
-public class PanneauStatique {
+public class PanneauStatique extends AbstractPanneau {
 
     private Image image;
 
@@ -11,6 +12,7 @@ public class PanneauStatique {
 
 
     public PanneauStatique(Image image, ImageView imageView) {
+        super();
         this.image = image;
         this.imageView = imageView;
     }
