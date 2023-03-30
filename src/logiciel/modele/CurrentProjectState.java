@@ -1,26 +1,34 @@
 package logiciel.modele;
 
+import javafx.scene.image.Image;
+import logiciel.Observateur.Observer;
+import logiciel.Observateur.Subject;
 import logiciel.memento.Memento;
 
-public class CurrentProjectState {
+import java.util.ArrayList;
+
+public class CurrentProjectState extends Subject {
 
     public final int CURRENTPERSPECTIVEMILIEU = 0;
     public final int CURRENTPERSPECTIVEDROIT = 1;
-    private Image currentProjectImage;
+    private ImageContainer currentProjectImageContainer;
     private Perspective perspectiveMilieu;
     private Perspective perspectiveDroite;
     private int currentPerspective;
 
 
-    public CurrentProjectState(Image currentProjectImage, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
-        this.currentProjectImage = currentProjectImage;
+    public CurrentProjectState(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
+        this.currentProjectImageContainer = currentProjectImageContainer;
         this.perspectiveMilieu = perspectiveMilieu;
         this.perspectiveDroite = perspectiveDroite;
         this.currentPerspective = 0;
+
+
+
     }
 
     public Memento save() throws CloneNotSupportedException{
-       return new Memento(currentProjectImage, perspectiveMilieu, perspectiveDroite);
+       return new Memento(currentProjectImageContainer, perspectiveMilieu, perspectiveDroite);
     }
 
     public void restore(){
@@ -36,12 +44,16 @@ public class CurrentProjectState {
     }
 
 
-    public Image getCurrentProjectImage() {
-        return currentProjectImage;
+    public ImageContainer getCurrentProjectImage() {
+        return currentProjectImageContainer;
     }
 
-    public void setCurrentProjectImage(Image currentProjectImage) {
-        this.currentProjectImage = currentProjectImage;
+
+    public void setCurrentProjectImage(String currentProjectImageContainer) {
+
+        this.currentProjectImageContainer.changeImage(currentProjectImageContainer);
+        this.notifyObservers();
+
     }
 
     public Perspective getPerspectiveMilieu() {
@@ -59,4 +71,6 @@ public class CurrentProjectState {
     public void setPerspectiveDroite(Perspective perspectiveDroite) {
         this.perspectiveDroite = perspectiveDroite;
     }
+
+
 }

@@ -1,25 +1,25 @@
 package logiciel.memento;
 
-import logiciel.modele.Image;
+import logiciel.modele.ImageContainer;
 import logiciel.modele.Perspective;
 
 public class Memento {
 
-    Image currentProjectImage;
+    ImageContainer currentProjectImageContainer;
     Perspective perspectiveMilieu;
     Perspective perspectiveDroite;
 
-    public Memento(Image currentProjectImage, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
+    public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
 
-        this.currentProjectImage = currentProjectImage.clone();
+        this.currentProjectImageContainer = currentProjectImageContainer.clone();
         this.perspectiveMilieu = perspectiveMilieu.clone();
         this.perspectiveDroite = perspectiveDroite.clone();
 
     }
 
 
-    public Image getMementoProjectImage() {
-        return currentProjectImage;
+    public ImageContainer getMementoProjectImage() {
+        return currentProjectImageContainer;
     }
 
     public Perspective getMementoPerspectiveMilieu() {

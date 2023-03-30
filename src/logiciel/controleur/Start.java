@@ -3,6 +3,7 @@ package logiciel.controleur;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import logiciel.modele.CurrentProjectState;
 import logiciel.vue.VerticalBoxPrincipal;
 
 public class Start extends Application {
@@ -22,6 +23,17 @@ public class Start extends Application {
 
         verticalBoxPrincipal = new VerticalBoxPrincipal(primaryStage);
         controler = new Controleur(verticalBoxPrincipal);
+
+        GestionnaireCommande gc = GestionnaireCommande.getInstance();
+
+        gc.setCps(new CurrentProjectState(
+                verticalBoxPrincipal.getPanneauGauche().getImage(),
+                verticalBoxPrincipal.getPanneauMilieu().getPerspective(),
+                verticalBoxPrincipal.getPanneauDroite().getPerspective()
+        ));
+
+        gc.getCps().attachObserver(verticalBoxPrincipal.getPanneauDroite());
+        gc.getCps().attachObserver(verticalBoxPrincipal.getPanneauMilieu());
 
 
 

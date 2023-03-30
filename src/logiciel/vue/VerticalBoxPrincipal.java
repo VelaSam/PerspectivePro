@@ -1,8 +1,5 @@
 package logiciel.vue;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +12,13 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import logiciel.modele.Image;
+import logiciel.Observateur.Observer;
+import logiciel.Observateur.Subject;
+import logiciel.modele.ImageContainer;
 import logiciel.modele.Perspective;
 
-import java.io.File;
-
-public class VerticalBoxPrincipal extends VBox {
+public class VerticalBoxPrincipal extends VBox implements Observer {
 
 
     private HBox panneauDImages;
@@ -55,9 +51,9 @@ public class VerticalBoxPrincipal extends VBox {
         barreSelection.getMenus().add(file);
 
         //TODO: METTRE DES VRAIS IMAGES, IMAGEVIEW ET PERSPECTIVES
-        panneauGauche = new PanneauStatique(new Image("banque_images/kitty.jpg"), new ImageView());
-        panneauMilieu = new PanneauDynamique(new Image("banque_images/kitty.jpg"), new Perspective(new ImageView()));
-        panneauDroite = new PanneauDynamique(new Image("banque_images/kitty.jpg"), new Perspective(new ImageView()));
+        panneauGauche = new PanneauStatique(new ImageContainer("banque_images/kitty.jpg"), new ImageView());
+        panneauMilieu = new PanneauDynamique(new ImageContainer("banque_images/kitty.jpg"), new Perspective(new ImageView()));
+        panneauDroite = new PanneauDynamique(new ImageContainer("banque_images/kitty.jpg"), new Perspective(new ImageView()));
 
         panneauDImages = new HBox();
         panneauDImages.setSpacing(10);
@@ -127,5 +123,10 @@ public class VerticalBoxPrincipal extends VBox {
 
     public Button getBoutonRedo() {
         return boutonRedo;
+    }
+
+    @Override
+    public void update(Subject s) {
+
     }
 }

@@ -1,10 +1,22 @@
 package logiciel.Observateur;
 
-public interface Subject {
+import java.util.ArrayList;
 
-    void attachObserver(Observer o);
-    void detachObserver(Observer o);
-    void notifyObservers();
+public abstract class Subject {
+    private ArrayList<Observer> observers = new ArrayList<Observer>();
+
+
+    public void attachObserver(Observer o){
+        this.observers.add(o);
+    };
+    public void detachObserver(Observer o){
+        this.observers.remove(o);
+    };
+    public void notifyObservers(){
+        for(Observer obs: observers){
+            obs.update(this);
+        }
+    };
 
 
 }
