@@ -1,12 +1,16 @@
 package logiciel.vue;
 
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.Pane;
 import logiciel.modele.Image;
 import logiciel.modele.Perspective;
 
-public class PanneauDynamique {
+public class PanneauDynamique extends Pane {
 
     private Image image;
-
+    private Border paneBackgound;
+    private ImageView currentImageView;
     private Perspective perspective;
 
 

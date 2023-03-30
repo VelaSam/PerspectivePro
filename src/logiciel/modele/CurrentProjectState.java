@@ -4,16 +4,19 @@ import logiciel.memento.Memento;
 
 public class CurrentProjectState {
 
-
+    public final int CURRENTPERSPECTIVEMILIEU = 0;
+    public final int CURRENTPERSPECTIVEDROIT = 1;
     private Image currentProjectImage;
     private Perspective perspectiveMilieu;
     private Perspective perspectiveDroite;
+    private int currentPerspective;
 
 
     public CurrentProjectState(Image currentProjectImage, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
         this.currentProjectImage = currentProjectImage;
         this.perspectiveMilieu = perspectiveMilieu;
         this.perspectiveDroite = perspectiveDroite;
+        this.currentPerspective = 0;
     }
 
     public Memento save() throws CloneNotSupportedException {
