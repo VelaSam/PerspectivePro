@@ -2,9 +2,16 @@ package logiciel.controleur;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import logiciel.modele.CurrentProjectState;
+import logiciel.modele.ImageContainer;
+import logiciel.modele.Perspective;
+import logiciel.vue.PanneauDynamique;
+import logiciel.vue.PanneauStatique;
 import logiciel.vue.VerticalBoxPrincipal;
+
+import java.io.File;
 
 public class Start extends Application {
 
@@ -21,7 +28,22 @@ public class Start extends Application {
         primaryStage.setTitle("PerspectivePro");
         primaryStage.getIcons().add(new Image("file:icon.png"));
 
-        verticalBoxPrincipal = new VerticalBoxPrincipal(primaryStage);
+        File imageBase = new File(System.getProperty("user.dir")+ "\\banque_images\\kitty.jpg");
+        //imageBase.toURI().toURL().toExternalForm()
+        ImageContainer imageCIdle = new ImageContainer("banque_images\\kitty.jpg");
+
+        ImageView imageVMilieu = new ImageView("banque_images\\kitty.jpg");
+        ImageView imageVDroite = new ImageView("banque_images\\kitty.jpg");
+
+        Perspective perspectiveMilieu = new Perspective(imageVMilieu);
+        Perspective perspectiveDroite = new Perspective(imageVDroite);
+
+        PanneauStatique panneauIdle = new PanneauStatique(imageCIdle);
+        PanneauDynamique panneauMilieu = new PanneauDynamique(perspectiveMilieu);
+        PanneauDynamique panneauDroite = new PanneauDynamique(perspectiveDroite);
+
+
+        verticalBoxPrincipal = new VerticalBoxPrincipal(primaryStage, panneauIdle, panneauMilieu, panneauDroite);
         controler = new Controleur(verticalBoxPrincipal);
 
         GestionnaireCommande gc = GestionnaireCommande.getInstance();
@@ -32,8 +54,10 @@ public class Start extends Application {
                 verticalBoxPrincipal.getPanneauDroite().getPerspective()
         ));
 
-        gc.getCps().attachObserver(verticalBoxPrincipal.getPanneauDroite());
-        gc.getCps().attachObserver(verticalBoxPrincipal.getPanneauMilieu());
+
+        imageCIdle.attachObserver(panneauIdle);
+        perspectiveDroite.attachObserver(panneauDroite);
+        perspectiveMilieu.attachObserver(panneauMilieu);
 
 
 

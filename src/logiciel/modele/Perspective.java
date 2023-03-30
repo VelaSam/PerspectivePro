@@ -1,7 +1,7 @@
 package logiciel.modele;
 
 import javafx.scene.image.ImageView;
-import logiciel.Observateur.Subject;
+import logiciel.observateur.Subject;
 
 public class Perspective extends Subject {
 
@@ -27,6 +27,11 @@ public class Perspective extends Subject {
         newPerspective.setZoomPourcentage(this.zoomPourcentage);
 
         return newPerspective;
+    }
+
+    public void changeImage(String path){
+        this.imageView = new ImageView(path);
+        super.notifyObservers();
     }
 
     public ImageView getImageView() {

@@ -1,5 +1,6 @@
 package logiciel.vue;
 
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -9,6 +10,7 @@ public abstract class AbstractPanneau extends Pane{
     Background paneBackground = new Background(new BackgroundFill(Color.WHITESMOKE, null, null));
 
 
+
     protected AbstractPanneau() {
 
         this.setPrefSize(600,800);
@@ -16,5 +18,7 @@ public abstract class AbstractPanneau extends Pane{
 
         this.setBorder(paneBorder);
         this.setBackground(paneBackground);
+
+
     }
 }

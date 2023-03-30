@@ -13,8 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import logiciel.Observateur.Observer;
-import logiciel.Observateur.Subject;
+import logiciel.observateur.Observer;
+import logiciel.observateur.Subject;
 import logiciel.modele.ImageContainer;
 import logiciel.modele.Perspective;
 
@@ -35,7 +35,7 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     private Button boutonRedo;
 
 
-    public VerticalBoxPrincipal(Stage primaryStage){
+    public VerticalBoxPrincipal(Stage primaryStage,PanneauStatique ps, PanneauDynamique pdMilieu, PanneauDynamique pdDroite){
 
         Background rootBackground = new Background(new BackgroundFill(Color.SILVER, null, null));
         this.setBackground(rootBackground);
@@ -50,10 +50,10 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
         file.getItems().addAll(boutonSauvegarde,boutonCharger);
         barreSelection.getMenus().add(file);
 
-        //TODO: METTRE DES VRAIS IMAGES, IMAGEVIEW ET PERSPECTIVES
-        panneauGauche = new PanneauStatique(new ImageContainer("banque_images/kitty.jpg"), new ImageView());
-        panneauMilieu = new PanneauDynamique(new ImageContainer("banque_images/kitty.jpg"), new Perspective(new ImageView()));
-        panneauDroite = new PanneauDynamique(new ImageContainer("banque_images/kitty.jpg"), new Perspective(new ImageView()));
+
+        panneauGauche = ps;
+        panneauMilieu = pdMilieu;
+        panneauDroite = pdDroite;
 
         panneauDImages = new HBox();
         panneauDImages.setSpacing(10);
