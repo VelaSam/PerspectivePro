@@ -2,8 +2,8 @@ package logiciel.vue;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import logiciel.Observateur.Observer;
-import logiciel.Observateur.Subject;
+import logiciel.observateur.Observer;
+import logiciel.observateur.Subject;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.ImageContainer;
 
@@ -11,13 +11,13 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
 
     private ImageContainer imageContainer;
 
-    private ImageView imageView;
 
 
-    public PanneauStatique(ImageContainer imageContainer, ImageView imageView) {
+
+    public PanneauStatique(ImageContainer imageContainer) {
         super();
         this.imageContainer = imageContainer;
-        this.imageView = imageView;
+        super.getChildren().add(imageContainer.getImageView());
     }
 
     public ImageContainer getImage() {
@@ -29,17 +29,18 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
     }
 
     public ImageView getImageView() {
-        return imageView;
+        return this.imageContainer.getImageView();
     }
 
     public void setImageView(ImageView imageView) {
-        this.imageView = imageView;
+         this.imageContainer.setImageView(imageView);
     }
 
     @Override
     public void update(Subject s) {
-        GestionnaireCommande gc = GestionnaireCommande.getInstance();
+        super.getChildren().removeAll();
+        super.getChildren().add(imageContainer.getImageView());
 
-        imageView.setImage(gc.getCps().getCurrentProjectImage().getImage());
+
     }
 }

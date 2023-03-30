@@ -2,8 +2,8 @@ package logiciel.vue;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Border;
-import logiciel.Observateur.Observer;
-import logiciel.Observateur.Subject;
+import logiciel.observateur.Observer;
+import logiciel.observateur.Subject;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.CurrentProjectState;
 import logiciel.modele.ImageContainer;
@@ -11,26 +11,20 @@ import logiciel.modele.Perspective;
 
 public class PanneauDynamique extends AbstractPanneau implements Observer {
 
-    private ImageContainer imageContainer;
+
     private Border paneBackgound;
-    private ImageView currentImageView;
     private Perspective perspective;
 
 
 
-    public PanneauDynamique(ImageContainer imageContainer, Perspective perspective) {
+    public PanneauDynamique( Perspective perspective) {
         super();
-        this.imageContainer = imageContainer;
         this.perspective = perspective;
+        super.getChildren().add(this.perspective.getImageView());
+
     }
 
-    public ImageContainer getImage() {
-        return imageContainer;
-    }
 
-    public void setImage(ImageContainer imageContainer) {
-        this.imageContainer = imageContainer;
-    }
 
     public Perspective getPerspective() {
         return perspective;
@@ -42,9 +36,8 @@ public class PanneauDynamique extends AbstractPanneau implements Observer {
 
     @Override
     public void update(Subject s) {
-        GestionnaireCommande gc = GestionnaireCommande.getInstance();
-        if(s instanceof CurrentProjectState){
-            this.imageContainer.changeImage(((CurrentProjectState) s).getCurrentProjectImage().getPath());
-        }
+        super.getChildren().removeAll();
+        super.getChildren().add(this.perspective.getImageView());
+
     }
 }

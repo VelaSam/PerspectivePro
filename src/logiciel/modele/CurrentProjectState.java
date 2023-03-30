@@ -1,8 +1,8 @@
 package logiciel.modele;
 
 import javafx.scene.image.Image;
-import logiciel.Observateur.Observer;
-import logiciel.Observateur.Subject;
+import logiciel.observateur.Observer;
+import logiciel.observateur.Subject;
 import logiciel.memento.Memento;
 
 import java.util.ArrayList;
@@ -52,7 +52,9 @@ public class CurrentProjectState extends Subject {
     public void setCurrentProjectImage(String currentProjectImageContainer) {
 
         this.currentProjectImageContainer.changeImage(currentProjectImageContainer);
-        this.notifyObservers();
+        this.perspectiveDroite.changeImage(currentProjectImageContainer);
+        this.perspectiveMilieu.changeImage(currentProjectImageContainer);
+
 
     }
 

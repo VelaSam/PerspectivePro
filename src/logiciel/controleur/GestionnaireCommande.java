@@ -24,7 +24,7 @@ public class GestionnaireCommande {
 
         if(instance == null){
 
-            return new GestionnaireCommande();
+            return instance = new GestionnaireCommande();
 
         }
         return instance;

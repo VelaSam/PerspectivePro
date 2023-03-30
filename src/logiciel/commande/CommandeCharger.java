@@ -7,6 +7,7 @@ import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.ImageContainer;
 
 import java.io.File;
+import java.net.MalformedURLException;
 
 public class CommandeCharger implements Commande{
     @Override
@@ -25,7 +26,8 @@ public class CommandeCharger implements Commande{
             System.out.println(selectedFile.getAbsolutePath());
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
 
-            gc.getCps().setCurrentProjectImage(selectedFile.getAbsolutePath());
+            gc.getCps().setCurrentProjectImage(selectedFile.getPath());
+
 
         } else{
             System.out.println("Pas de fichier sélectionner");
