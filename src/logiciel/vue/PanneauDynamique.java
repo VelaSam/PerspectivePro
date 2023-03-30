@@ -1,5 +1,7 @@
 package logiciel.vue;
 
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import logiciel.modele.Image;
 import logiciel.modele.Perspective;

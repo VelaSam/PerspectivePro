@@ -1,9 +1,9 @@
 package logiciel.controleur;
 
 import logiciel.commande.Commande;
+import logiciel.vue.VerticalBoxPrincipal;
 
 public class Controleur {
-
 
     Commande commande;
 

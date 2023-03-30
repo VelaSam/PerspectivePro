@@ -75,6 +75,7 @@ public class VerticalBoxPrincipal extends VBox {
     }
 
 
-
-
+    public Menu getBoutonCharger() {
+        return boutonCharger;
+    }
 }

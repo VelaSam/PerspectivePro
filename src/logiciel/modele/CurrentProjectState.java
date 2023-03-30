@@ -19,7 +19,7 @@ public class CurrentProjectState {
         this.currentPerspective = 0;
     }
 
-    public Memento save(){
+    public Memento save() throws CloneNotSupportedException{
        return new Memento(currentProjectImage, perspectiveMilieu, perspectiveDroite);
     }
 
