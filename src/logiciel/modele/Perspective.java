@@ -1,8 +1,9 @@
 package logiciel.modele;
 
 import javafx.scene.image.ImageView;
+import logiciel.Observateur.Subject;
 
-public class Perspective {
+public class Perspective extends Subject {
 
     private ImageView imageView;
     private double positionX;

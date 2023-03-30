@@ -15,13 +15,17 @@ public class GestionnaireCommande {
 
 
     private GestionnaireCommande(){
-        //TODO: Faire constructeur
+        this.pileDeCommande = new Stack<Memento>();
+        this.pileDeUndo = new Stack<Memento>();
+
     }
 
     public static GestionnaireCommande getInstance(){
 
         if(instance == null){
+
             return new GestionnaireCommande();
+
         }
         return instance;
 
