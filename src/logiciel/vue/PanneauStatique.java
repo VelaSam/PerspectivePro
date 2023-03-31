@@ -38,7 +38,13 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
 
     @Override
     public void update(Subject s) {
+        
+        
+        
         super.getChildren().clear();
+        this.imageContainer.getImageView().setScaleX(0.25);
+        
+        this.imageContainer.getImageView().setScaleY(0.25);
         super.getChildren().add(imageContainer.getImageView());
 
 

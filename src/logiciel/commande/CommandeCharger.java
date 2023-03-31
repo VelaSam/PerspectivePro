@@ -24,6 +24,7 @@ public class CommandeCharger implements Commande{
 
         if (selectedFile != null) {
             System.out.println(selectedFile.getAbsolutePath());
+
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
 
             gc.getCps().setCurrentProjectImage(selectedFile.getPath());

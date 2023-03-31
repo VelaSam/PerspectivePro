@@ -14,7 +14,7 @@ public class Perspective extends Subject {
         this.imageView = imageView;
         positionX = 0;
         positionY = 0;
-        zoomPourcentage = 100;
+        zoomPourcentage = 0.25;
     }
 
     public Perspective clone() {
@@ -64,5 +64,6 @@ public class Perspective extends Subject {
 
     public void setZoomPourcentage(double zoomPourcentage) {
         this.zoomPourcentage = zoomPourcentage;
+        notifyObservers();
     }
 }

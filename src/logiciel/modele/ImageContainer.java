@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
+import org.omg.CORBA.Current;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,9 +24,8 @@ public class ImageContainer  extends Subject {
     }
     public void changeImage(String path){
 
-            this.image = new ImageView("file:/"+path);
-            this.path = path;
-
+        this.image = new ImageView("file:/"+path);
+        this.path = path;
 
         this.notifyObservers();
 

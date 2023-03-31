@@ -9,8 +9,9 @@ import java.util.ArrayList;
 
 public class CurrentProjectState extends Subject {
 
-    public final int CURRENTPERSPECTIVEMILIEU = 0;
-    public final int CURRENTPERSPECTIVEDROIT = 1;
+    public static final int CURRENT_PERSPECTIVE_MILIEU = 0;
+    public static final int CURRENT_PERSPECTIVE_DROITE = 1;
+
     private ImageContainer currentProjectImageContainer;
     private Perspective perspectiveMilieu;
     private Perspective perspectiveDroite;
@@ -51,6 +52,7 @@ public class CurrentProjectState extends Subject {
 
     public void setCurrentProjectImage(String currentProjectImageContainer) {
 
+
         this.currentProjectImageContainer.changeImage(currentProjectImageContainer);
         this.perspectiveDroite.changeImage(currentProjectImageContainer);
         this.perspectiveMilieu.changeImage(currentProjectImageContainer);
@@ -72,6 +74,17 @@ public class CurrentProjectState extends Subject {
 
     public void setPerspectiveDroite(Perspective perspectiveDroite) {
         this.perspectiveDroite = perspectiveDroite;
+    }
+
+
+    public Perspective getPerspective(int perspective){
+        if(perspective == CURRENT_PERSPECTIVE_MILIEU)
+            return this.getPerspectiveMilieu();
+        else if(perspective == CURRENT_PERSPECTIVE_DROITE)
+            return this.getPerspectiveDroite();
+        else {
+            throw new IllegalArgumentException("Invalid perspective value: " + perspective);
+        }
     }
 
 
