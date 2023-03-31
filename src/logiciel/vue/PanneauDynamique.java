@@ -16,7 +16,6 @@ public class PanneauDynamique extends AbstractPanneau implements Observer {
     private Perspective perspective;
 
 
-
     public PanneauDynamique( Perspective perspective) {
         super();
         this.perspective = perspective;
@@ -36,7 +35,7 @@ public class PanneauDynamique extends AbstractPanneau implements Observer {
 
     @Override
     public void update(Subject s) {
-        super.getChildren().removeAll();
+        super.getChildren().clear();
         super.getChildren().add(this.perspective.getImageView());
 
     }
