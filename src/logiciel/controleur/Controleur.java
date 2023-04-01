@@ -1,10 +1,7 @@
 package logiciel.controleur;
 
 import javafx.stage.FileChooser;
-import logiciel.commande.CommandZoomIn;
-import logiciel.commande.CommandZoomOut;
-import logiciel.commande.Commande;
-import logiciel.commande.CommandeCharger;
+import logiciel.commande.*;
 import logiciel.modele.CurrentProjectState;
 import logiciel.vue.VerticalBoxPrincipal;
 
@@ -44,6 +41,16 @@ public class Controleur {
     // Initialiser tout les actions des boutons de VBP
         vbp.getBoutonCharger().setOnAction(e ->{
             this.setCommande(new CommandeCharger());
+            this.executeCommand();
+        });
+
+        vbp.getPanneauMilieu().getPerspective().getImageView().setOnMousePressed(e->{
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauMilieu().getPerspective().getImageView()));
+            this.executeCommand();
+        });
+
+        vbp.getPanneauDroite().getPerspective().getImageView().setOnMousePressed(e->{
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauDroite().getPerspective().getImageView()));
             this.executeCommand();
         });
 

@@ -20,17 +20,17 @@ public class CommandZoomOut implements Commande {
 
         if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_MILIEU){
             //seulement dezoomer si le zoompourcentage reste plus grand que 0
-            if(gc.getCps().getPerspectiveMilieu().getZoomPourcentage()-0.1 > 0){
+            if(gc.getCps().getPerspectiveMilieu().getZoomPourcentage()-0.05 > 0){
 
                 gc.getCps().getPerspectiveMilieu().setZoomPourcentage(
-                        gc.getCps().getPerspectiveMilieu().getZoomPourcentage()-0.1
+                        gc.getCps().getPerspectiveMilieu().getZoomPourcentage()-0.05
                 );
             }
         } else if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_DROITE){
-            if(gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.1 > 0){
+            if(gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.05 > 0){
 
                 gc.getCps().getPerspectiveDroite().setZoomPourcentage(
-                        gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.1
+                        gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.05
                 );
             }
         }

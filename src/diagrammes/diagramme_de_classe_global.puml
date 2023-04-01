@@ -46,6 +46,7 @@ legend top left
    
     }
 
+
     class CommandZoomIn #F5B0CB implements Commande{
         +execute()
    
@@ -98,7 +99,6 @@ legend top left
 
     'Originator = CurrentProjectState'
     'Caretaker = GestionnaireDeCommande'
-
 
     class Memento #2CEAA3{
 
