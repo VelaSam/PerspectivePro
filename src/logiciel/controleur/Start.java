@@ -59,9 +59,6 @@ public class Start extends Application {
         perspectiveDroite.attachObserver(panneauDroite);
         perspectiveMilieu.attachObserver(panneauMilieu);
 
-
-
-
     }
 
     public VerticalBoxPrincipal getVerticalBoxPrincipal() {

@@ -1,11 +1,7 @@
 package logiciel.modele;
 
-import javafx.scene.image.Image;
-import logiciel.observateur.Observer;
+import logiciel.memento.MementoIF;
 import logiciel.observateur.Subject;
-import logiciel.memento.Memento;
-
-import java.util.ArrayList;
 
 public class CurrentProjectState extends Subject {
 
@@ -28,17 +24,17 @@ public class CurrentProjectState extends Subject {
 
     }
 
-    public Memento save() throws CloneNotSupportedException{
+    public MementoIF save() throws CloneNotSupportedException{
        return new Memento(currentProjectImageContainer, perspectiveMilieu, perspectiveDroite);
     }
 
     public void restore(){
         //TODO: restore method
         /* L'idée est que Controleur vas execute la CommandeUndo qui vas appeler la méthode présente restore()
-           ((Memento)GestionnaireCommande.getInstance().undo()).getState(this);
+           ((MementoIF)GestionnaireCommande.getInstance().undo()).getState(this);
                  1)La méthode undo() renvoie le mémento qui doit être utiliser pour restorer l'instance
-                      (peut être pas besoin de cast Memento)
-                 2)Notre implémentation de Memento as la méthode getState(this) qui prend le CurrentProjectState
+                      (peut être pas besoin de cast MementoIF)
+                 2)Notre implémentation de MementoIF as la méthode getState(this) qui prend le CurrentProjectState
              3)À l'intérieur du mémento il vas changer les valeurs cu CPS avec la référence this
 
          */
@@ -86,6 +82,39 @@ public class CurrentProjectState extends Subject {
             throw new IllegalArgumentException("Invalid perspective value: " + perspective);
         }
     }
+
+
+
+    private class Memento implements MementoIF {
+
+        ImageContainer currentProjectImageContainer;
+        Perspective perspectiveMilieu;
+        Perspective perspectiveDroite;
+
+        public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
+
+            this.currentProjectImageContainer = currentProjectImageContainer.clone();
+            this.perspectiveMilieu = perspectiveMilieu.clone();
+            this.perspectiveDroite = perspectiveDroite.clone();
+
+            
+
+        }
+
+
+        public ImageContainer getMementoProjectImage() {
+            return currentProjectImageContainer;
+        }
+
+        public Perspective getMementoPerspectiveMilieu() {
+            return perspectiveMilieu;
+        }
+
+        public Perspective getMementoPerspectiveDroite() {
+            return perspectiveDroite;
+        }
+    }
+
 
 
 }
