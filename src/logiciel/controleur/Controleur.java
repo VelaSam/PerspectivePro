@@ -19,6 +19,7 @@ public class Controleur {
     }
     public void executeCommand(){
         commande.execute();
+
     }
 
     public void initSauvegarde(){
@@ -78,6 +79,12 @@ public class Controleur {
                 this.setCommande(new CommandZoomOut(e, CurrentProjectState.CURRENT_PERSPECTIVE_DROITE));
                 this.executeCommand();
             }
+        });
+
+        vbp.getBoutonUndo().setOnAction(e ->{
+
+            this.setCommande(new CommandUndo());
+            this.executeCommand();
         });
 
     }

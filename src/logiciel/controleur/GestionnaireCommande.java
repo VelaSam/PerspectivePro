@@ -2,6 +2,7 @@ package logiciel.controleur;
 
 import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
+import logiciel.vue.VerticalBoxPrincipal;
 
 import java.util.Stack;
 
@@ -12,6 +13,7 @@ public class GestionnaireCommande {
     //a chaque fois quon exectue une autre action a lexterieur de undo/redo, on vide la pile
     private Stack<MementoIF> pileDeUndo;
     private CurrentProjectState cps;
+    private VerticalBoxPrincipal verticalBoxPrincipal;
 
 
     private GestionnaireCommande(){
@@ -31,7 +33,7 @@ public class GestionnaireCommande {
 
     }
 
-    private MementoIF undo(){
+    public MementoIF undo(){
         return pileDeCommande.pop();
     }
 
@@ -62,5 +64,13 @@ public class GestionnaireCommande {
 
     public void setCps(CurrentProjectState cps) {
         this.cps = cps;
+    }
+
+    public VerticalBoxPrincipal getVerticalBoxPrincipal() {
+        return verticalBoxPrincipal;
+    }
+
+    public void setVerticalBoxPrincipal(VerticalBoxPrincipal verticalBoxPrincipal) {
+        this.verticalBoxPrincipal = verticalBoxPrincipal;
     }
 }

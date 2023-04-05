@@ -1,7 +1,13 @@
 package logiciel.modele;
 
+import javafx.scene.image.Image;
+import logiciel.controleur.GestionnaireCommande;
 import logiciel.memento.MementoIF;
+import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
+import sun.net.www.content.text.Generic;
+
+import java.util.ArrayList;
 
 public class CurrentProjectState extends Subject {
 
@@ -14,6 +20,9 @@ public class CurrentProjectState extends Subject {
     private int currentPerspective;
 
 
+
+
+
     public CurrentProjectState(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
         this.currentProjectImageContainer = currentProjectImageContainer;
         this.perspectiveMilieu = perspectiveMilieu;
@@ -24,20 +33,37 @@ public class CurrentProjectState extends Subject {
 
     }
 
-    public MementoIF save() throws CloneNotSupportedException{
+    public MementoIF save(){
        return new Memento(currentProjectImageContainer, perspectiveMilieu, perspectiveDroite);
     }
 
     public void restore(){
-        //TODO: restore method
-        /* L'idée est que Controleur vas execute la CommandeUndo qui vas appeler la méthode présente restore()
-           ((MementoIF)GestionnaireCommande.getInstance().undo()).getState(this);
-                 1)La méthode undo() renvoie le mémento qui doit être utiliser pour restorer l'instance
-                      (peut être pas besoin de cast MementoIF)
-                 2)Notre implémentation de MementoIF as la méthode getState(this) qui prend le CurrentProjectState
-             3)À l'intérieur du mémento il vas changer les valeurs cu CPS avec la référence this
 
-         */
+        GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
+
+
+        Memento mementoToPop = (Memento) gestionnaireCommande.undo();
+        if (mementoToPop != null){
+            this.perspectiveDroite.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
+            System.out.println(mementoToPop.getImagePath());
+            this.perspectiveMilieu.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
+
+            this.currentProjectImageContainer.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
+
+            this.perspectiveDroite.getImageView().setX(mementoToPop.getMementoPerspectiveDroite().getImageView().getX());
+            this.perspectiveDroite.getImageView().setY(mementoToPop.getMementoPerspectiveDroite().getImageView().getY());
+            this.perspectiveDroite.setZoomPourcentage(mementoToPop.zoomPourcentageImageDroite);
+
+
+            this.perspectiveMilieu.getImageView().setX(mementoToPop.getMementoPerspectiveMilieu().getImageView().getX());
+            this.perspectiveMilieu.getImageView().setY(mementoToPop.getMementoPerspectiveMilieu().getImageView().getY());
+            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.zoomPourcentageImageMilieu);
+
+            this.perspectiveMilieu.notifyObservers();
+            this.perspectiveDroite.notifyObservers();
+            this.currentProjectImageContainer.notifyObservers();
+        }
+
     }
 
 
@@ -87,9 +113,18 @@ public class CurrentProjectState extends Subject {
 
     private class Memento implements MementoIF {
 
-        ImageContainer currentProjectImageContainer;
-        Perspective perspectiveMilieu;
-        Perspective perspectiveDroite;
+        private ImageContainer currentProjectImageContainer;
+        private Perspective perspectiveMilieu;
+        private Perspective perspectiveDroite;
+
+        private String imagePath;
+        private double xImageMilieu;
+        private double yImageMilieu;
+        private double xImageDroite;
+        private double yImageDroite;
+        private double zoomPourcentageImageMilieu;
+        private double zoomPourcentageImageDroite;
+
 
         public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
 
@@ -97,7 +132,13 @@ public class CurrentProjectState extends Subject {
             this.perspectiveMilieu = perspectiveMilieu.clone();
             this.perspectiveDroite = perspectiveDroite.clone();
 
-            
+            this.xImageDroite = perspectiveDroite.getImageView().getX();
+            this.yImageDroite = perspectiveDroite.getImageView().getY();
+            this.xImageMilieu = perspectiveMilieu.getImageView().getX();
+            this.yImageMilieu = perspectiveMilieu.getImageView().getY();
+            this.zoomPourcentageImageDroite = perspectiveDroite.getZoomPourcentage();
+            this.zoomPourcentageImageMilieu = perspectiveMilieu.getZoomPourcentage();
+
 
         }
 
@@ -112,6 +153,14 @@ public class CurrentProjectState extends Subject {
 
         public Perspective getMementoPerspectiveDroite() {
             return perspectiveDroite;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
         }
     }
 

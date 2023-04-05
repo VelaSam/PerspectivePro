@@ -54,10 +54,12 @@ public class Start extends Application {
                 verticalBoxPrincipal.getPanneauDroite().getPerspective()
         ));
 
+        gc.setVerticalBoxPrincipal(verticalBoxPrincipal);
 
         imageCIdle.attachObserver(panneauIdle);
         perspectiveDroite.attachObserver(panneauDroite);
         perspectiveMilieu.attachObserver(panneauMilieu);
+
 
     }
 

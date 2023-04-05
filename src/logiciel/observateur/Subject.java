@@ -17,6 +17,7 @@ public abstract class Subject {
             obs.update(this);
         }
     };
-
-
+   public void clearObservers(){
+       this.observers.clear();
+   }
 }

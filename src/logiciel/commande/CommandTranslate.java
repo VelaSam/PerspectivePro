@@ -2,6 +2,8 @@ package logiciel.commande;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import logiciel.controleur.GestionnaireCommande;
+import logiciel.memento.MementoIF;
 
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -16,6 +18,15 @@ public class CommandTranslate implements Commande{
     }
     @Override
     public void execute() {
+
+
+        GestionnaireCommande gc = GestionnaireCommande.getInstance();
+
+        MementoIF memento = gc.getCps().save();
+        gc.getPileDeCommande().add(memento);
+
+
+
 
         AtomicReference<Double> ecartH = new AtomicReference<>((double) 0);
         AtomicReference<Double> ecartV = new AtomicReference<>((double) 0);
