@@ -11,54 +11,39 @@ public class CommandTranslate implements Commande{
 
     private ImageView currentImageView;
     private MouseEvent event;
+    private double ecartH;
+    private double ecartV;
 
-    public CommandTranslate(MouseEvent event, ImageView imageView){
+    public CommandTranslate(MouseEvent event, ImageView imageView, double ecartH, double ecartV){
         this.currentImageView = imageView;
         this.event = event;
+        this.ecartH = ecartH;
+        this.ecartV = ecartV;
     }
     @Override
     public void execute() {
 
 
-        GestionnaireCommande gc = GestionnaireCommande.getInstance();
 
-        MementoIF memento = gc.getCps().save();
-        gc.getPileDeCommande().add(memento);
-
-
-
-
-        AtomicReference<Double> ecartH = new AtomicReference<>((double) 0);
-        AtomicReference<Double> ecartV = new AtomicReference<>((double) 0);
-
-        currentImageView.setOnMousePressed(event -> {
-
-            ecartH.set(currentImageView.getX()-event.getX());
-            ecartV.set(currentImageView.getY()-event.getY());
-
-
-            currentImageView.setOnMouseDragged(e -> {
-                double positionX = e.getX()+ecartH.get();
-                double positionY = e.getY()+ecartV.get();
-                double ecartX =currentImageView.getX()-e.getX();
-                double ecartY =currentImageView.getY()-e.getY();
+                double positionX = event.getX()+ ecartH;
+                double positionY = event.getY()+ ecartV;
+                double ecartX =currentImageView.getX()-event.getX();
+                double ecartY =currentImageView.getY()-event.getY();
 
 
                 if(positionX >= 0 ){
                     currentImageView.setX(positionX);
                 }else{
-                    ecartH.set(ecartX);
+                   // ecartH.set(ecartX);
                 }
 
                 if(positionY>=0){
                     currentImageView.setY(positionY);
                 }else{
-                    ecartV.set(ecartY);
+                    //ecartV.set(ecartY);
                 }
 
 
-        });
 
-        });
     }
 }

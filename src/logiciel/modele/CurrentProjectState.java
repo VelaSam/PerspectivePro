@@ -44,20 +44,20 @@ public class CurrentProjectState extends Subject {
 
         Memento mementoToPop = (Memento) gestionnaireCommande.undo();
         if (mementoToPop != null){
-            this.perspectiveDroite.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
-            System.out.println(mementoToPop.getImagePath());
-            this.perspectiveMilieu.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
+            this.perspectiveDroite.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
 
-            this.currentProjectImageContainer.getImageView().setImage(new Image("file:/"+System.getProperty("user.dir")+mementoToPop.getImagePath()));
+            this.perspectiveMilieu.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
 
-            this.perspectiveDroite.getImageView().setX(mementoToPop.getMementoPerspectiveDroite().getImageView().getX());
-            this.perspectiveDroite.getImageView().setY(mementoToPop.getMementoPerspectiveDroite().getImageView().getY());
-            this.perspectiveDroite.setZoomPourcentage(mementoToPop.zoomPourcentageImageDroite);
+            this.currentProjectImageContainer.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveDroite.getImageView().setX(mementoToPop.getxImageDroite());
+            this.perspectiveDroite.getImageView().setY(mementoToPop.getyImageDroite());
+            this.perspectiveDroite.setZoomPourcentage(mementoToPop.getZoomPourcentageImageDroite());
 
 
-            this.perspectiveMilieu.getImageView().setX(mementoToPop.getMementoPerspectiveMilieu().getImageView().getX());
-            this.perspectiveMilieu.getImageView().setY(mementoToPop.getMementoPerspectiveMilieu().getImageView().getY());
-            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.zoomPourcentageImageMilieu);
+            this.perspectiveMilieu.getImageView().setX(mementoToPop.getxImageMilieu());
+            this.perspectiveMilieu.getImageView().setY(mementoToPop.getyImageMilieu());
+            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
 
             this.perspectiveMilieu.notifyObservers();
             this.perspectiveDroite.notifyObservers();
@@ -113,9 +113,7 @@ public class CurrentProjectState extends Subject {
 
     private class Memento implements MementoIF {
 
-        private ImageContainer currentProjectImageContainer;
-        private Perspective perspectiveMilieu;
-        private Perspective perspectiveDroite;
+
 
         private String imagePath;
         private double xImageMilieu;
@@ -128,9 +126,6 @@ public class CurrentProjectState extends Subject {
 
         public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
 
-            this.currentProjectImageContainer = currentProjectImageContainer.clone();
-            this.perspectiveMilieu = perspectiveMilieu.clone();
-            this.perspectiveDroite = perspectiveDroite.clone();
 
             this.xImageDroite = perspectiveDroite.getImageView().getX();
             this.yImageDroite = perspectiveDroite.getImageView().getY();
@@ -139,28 +134,37 @@ public class CurrentProjectState extends Subject {
             this.zoomPourcentageImageDroite = perspectiveDroite.getZoomPourcentage();
             this.zoomPourcentageImageMilieu = perspectiveMilieu.getZoomPourcentage();
 
+            this.imagePath = currentProjectImageContainer.getPath();
 
-        }
 
-
-        public ImageContainer getMementoProjectImage() {
-            return currentProjectImageContainer;
-        }
-
-        public Perspective getMementoPerspectiveMilieu() {
-            return perspectiveMilieu;
-        }
-
-        public Perspective getMementoPerspectiveDroite() {
-            return perspectiveDroite;
         }
 
         public String getImagePath() {
             return imagePath;
         }
 
-        public void setImagePath(String imagePath) {
-            this.imagePath = imagePath;
+        public double getxImageMilieu() {
+            return xImageMilieu;
+        }
+
+        public double getyImageMilieu() {
+            return yImageMilieu;
+        }
+
+        public double getxImageDroite() {
+            return xImageDroite;
+        }
+
+        public double getyImageDroite() {
+            return yImageDroite;
+        }
+
+        public double getZoomPourcentageImageMilieu() {
+            return zoomPourcentageImageMilieu;
+        }
+
+        public double getZoomPourcentageImageDroite() {
+            return zoomPourcentageImageDroite;
         }
     }
 
