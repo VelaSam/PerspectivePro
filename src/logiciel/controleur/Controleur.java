@@ -1,12 +1,15 @@
 package logiciel.controleur;
 
+import javafx.scene.image.Image;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import logiciel.commande.*;
 import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
 import logiciel.vue.VerticalBoxPrincipal;
 
-import java.io.File;
+import java.io.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Controleur {
@@ -51,7 +54,7 @@ public class Controleur {
 
     private void initActionButtons(){
     // Initialiser tout les actions des boutons de VBP
-        vbp.getBoutonCharger().setOnAction(e ->{
+        vbp.getBoutonChargerImage().setOnAction(e ->{
             this.setCommande(new CommandeCharger());
             this.executeCommand();
         });
@@ -138,6 +141,81 @@ public class Controleur {
 
             this.setCommande(new CommandRedo());
             this.executeCommand();
+        });
+
+        vbp.getBoutonSauvegarde().setOnAction(e ->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Save Directory");
+
+            //Ajustment of perspectives before serialisation
+            gc.getCps().getPerspectiveMilieu().setPositionX(gc.getCps().getPerspectiveMilieu().getImageView().getX());
+            gc.getCps().getPerspectiveMilieu().setPositionY(gc.getCps().getPerspectiveMilieu().getImageView().getY());
+
+            gc.getCps().getPerspectiveDroite().setPositionX(gc.getCps().getPerspectiveDroite().getImageView().getX());
+            gc.getCps().getPerspectiveDroite().setPositionY(gc.getCps().getPerspectiveDroite().getImageView().getY());
+
+
+            // Show only directories
+            directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+            // Show the file chooser dialog
+            File selectedDirectory = directoryChooser.showDialog(new Stage());
+            try {
+                FileOutputStream fileOut = new FileOutputStream(selectedDirectory.getPath()+"\\SauvegardeProjet.ser");
+
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(gc.getCps());
+                out.close();
+                fileOut.close();
+            } catch (IOException i) {
+                i.printStackTrace();
+            }
+
+        });
+
+        vbp.getBoutonChargerProjet().setOnAction(event -> {
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            CurrentProjectState cps;
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open File");
+
+            // Show only directories
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+
+            // Show the file chooser dialog
+            File selectedFile = fileChooser.showOpenDialog(new Stage());
+            try {
+                FileInputStream fileIn = new FileInputStream(selectedFile);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                cps = (CurrentProjectState) in.readObject();
+
+                in.close();
+                fileIn.close();
+            } catch (IOException i) {
+                i.printStackTrace();
+                return;
+            } catch (ClassNotFoundException c) {
+                System.out.println("Class not found");
+                c.printStackTrace();
+                return;
+            }
+
+            if(cps != null){
+                //PerspectiveGauche
+                gc.getCps().getCurrentProjectImage().getImageView().setImage(new Image("file:\\"+cps.getCurrentProjectImage().getPath()));
+                //PerspectiveMilieu
+                gc.getCps().getPerspectiveMilieu().getImageView().setX(cps.getPerspectiveMilieu().getPositionX());
+                gc.getCps().getPerspectiveMilieu().getImageView().setY(cps.getPerspectiveMilieu().getPositionY());
+                gc.getCps().getPerspectiveMilieu().setZoomPourcentage(cps.getPerspectiveMilieu().getZoomPourcentage());
+                //PerspectiveDroite
+                gc.getCps().getPerspectiveDroite().getImageView().setX(cps.getPerspectiveDroite().getPositionX());
+                gc.getCps().getPerspectiveDroite().getImageView().setY(cps.getPerspectiveDroite().getPositionY());
+                gc.getCps().getPerspectiveDroite().setZoomPourcentage(cps.getPerspectiveDroite().getZoomPourcentage());
+            }
+
+
         });
 
     }

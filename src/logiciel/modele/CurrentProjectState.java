@@ -7,9 +7,10 @@ import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
 import sun.net.www.content.text.Generic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CurrentProjectState extends Subject {
+public class CurrentProjectState extends Subject implements Serializable {
 
     public static final int CURRENT_PERSPECTIVE_MILIEU = 0;
     public static final int CURRENT_PERSPECTIVE_DROITE = 1;

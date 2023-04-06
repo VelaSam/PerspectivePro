@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -15,8 +14,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
-import logiciel.modele.ImageContainer;
-import logiciel.modele.Perspective;
 
 public class VerticalBoxPrincipal extends VBox implements Observer {
 
@@ -28,7 +25,8 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     private MenuBar barreSelection;
     private Menu file;
     private MenuItem boutonSauvegarde;
-    private MenuItem boutonCharger;
+    private MenuItem boutonChargerImage;
+    private MenuItem boutonChargerProjet;
 
     private HBox sectionBas;
     private Button boutonUndo;
@@ -44,10 +42,11 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
 
         barreSelection = new MenuBar();
         file = new Menu("File");
-        boutonCharger = new MenuItem("Charger");
+        boutonChargerImage = new MenuItem("ChargerImage");
         boutonSauvegarde = new MenuItem("Sauvegarder");
+        boutonChargerProjet = new MenuItem("ChargerProjet");
 
-        file.getItems().addAll(boutonSauvegarde,boutonCharger);
+        file.getItems().addAll(boutonSauvegarde, boutonChargerImage, boutonChargerProjet);
         barreSelection.getMenus().add(file);
 
 
@@ -109,8 +108,8 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
         return boutonSauvegarde;
     }
 
-    public MenuItem getBoutonCharger() {
-        return boutonCharger;
+    public MenuItem getBoutonChargerImage() {
+        return boutonChargerImage;
     }
 
     public HBox getSectionBas() {
@@ -128,5 +127,9 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     @Override
     public void update(Subject s) {
 
+    }
+
+    public MenuItem getBoutonChargerProjet() {
+        return boutonChargerProjet;
     }
 }

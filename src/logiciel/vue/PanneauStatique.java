@@ -14,10 +14,12 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
 
 
 
+
     public PanneauStatique(ImageContainer imageContainer) {
         super();
         this.imageContainer = imageContainer;
         super.getChildren().add(imageContainer.getImageView());
+
     }
 
     public ImageContainer getImage() {
@@ -32,17 +34,19 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
         return this.imageContainer.getImageView();
     }
 
-    public void setImageView(ImageView imageView) {
-         this.imageContainer.setImageView(imageView);
-    }
+
 
     @Override
     public void update(Subject s) {
+
+        GestionnaireCommande gc = GestionnaireCommande.getInstance();
+        this.imageContainer.getImageView().setImage(new Image("file:/"+gc.getCps().getCurrentProjectImage().getPath()));
         
         
-        
-        super.getChildren().clear();
-        super.getChildren().add(imageContainer.getImageView());
+//        super.getChildren().clear();
+//        super.getChildren().add(imageContainer.getImageView());
+
+
 
 
     }

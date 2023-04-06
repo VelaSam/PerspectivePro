@@ -3,9 +3,11 @@ package logiciel.modele;
 import javafx.scene.image.ImageView;
 import logiciel.observateur.Subject;
 
-public class Perspective extends Subject {
+import java.io.Serializable;
 
-    private ImageView imageView;
+public class Perspective extends Subject implements Serializable {
+
+    private transient ImageView imageView;
     private double positionX;
     private double positionY;
     private double zoomPourcentage;

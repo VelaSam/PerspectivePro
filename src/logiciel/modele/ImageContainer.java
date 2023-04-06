@@ -7,12 +7,13 @@ import logiciel.observateur.Subject;
 import org.omg.CORBA.Current;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ImageContainer  extends Subject {
+public class ImageContainer  extends Subject implements Serializable {
 
     private String path;
-    private ImageView image;
+    private transient ImageView image;
 
     public ImageContainer(String path) {
         this.path = path;
@@ -41,5 +42,7 @@ public class ImageContainer  extends Subject {
     public String getPath(){
         return this.path;
     }
-
+    public void setPath(String path){
+        this.path = path;
+    }
 }
