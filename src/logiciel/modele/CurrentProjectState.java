@@ -1,9 +1,11 @@
 package logiciel.modele;
 
 import javafx.scene.image.Image;
+import logiciel.controleur.GestionnaireCommande;
+import logiciel.memento.MementoIF;
 import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
-import logiciel.memento.Memento;
+import sun.net.www.content.text.Generic;
 
 import java.util.ArrayList;
 
@@ -18,6 +20,9 @@ public class CurrentProjectState extends Subject {
     private int currentPerspective;
 
 
+
+
+
     public CurrentProjectState(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
         this.currentProjectImageContainer = currentProjectImageContainer;
         this.perspectiveMilieu = perspectiveMilieu;
@@ -28,20 +33,65 @@ public class CurrentProjectState extends Subject {
 
     }
 
-    public Memento save() throws CloneNotSupportedException{
+    public MementoIF save(){
        return new Memento(currentProjectImageContainer, perspectiveMilieu, perspectiveDroite);
     }
 
     public void restore(){
-        //TODO: restore method
-        /* L'idée est que Controleur vas execute la CommandeUndo qui vas appeler la méthode présente restore()
-           ((Memento)GestionnaireCommande.getInstance().undo()).getState(this);
-                 1)La méthode undo() renvoie le mémento qui doit être utiliser pour restorer l'instance
-                      (peut être pas besoin de cast Memento)
-                 2)Notre implémentation de Memento as la méthode getState(this) qui prend le CurrentProjectState
-             3)À l'intérieur du mémento il vas changer les valeurs cu CPS avec la référence this
 
-         */
+        GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
+
+
+        Memento mementoToPop = (Memento) gestionnaireCommande.undo();
+        if (mementoToPop != null){
+            this.perspectiveDroite.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveMilieu.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.currentProjectImageContainer.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveDroite.getImageView().setX(mementoToPop.getxImageDroite());
+            this.perspectiveDroite.getImageView().setY(mementoToPop.getyImageDroite());
+            this.perspectiveDroite.setZoomPourcentage(mementoToPop.getZoomPourcentageImageDroite());
+
+
+            this.perspectiveMilieu.getImageView().setX(mementoToPop.getxImageMilieu());
+            this.perspectiveMilieu.getImageView().setY(mementoToPop.getyImageMilieu());
+            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
+
+            this.perspectiveMilieu.notifyObservers();
+            this.perspectiveDroite.notifyObservers();
+            this.currentProjectImageContainer.notifyObservers();
+        }
+
+    }
+
+    public void getBack(){
+
+        GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
+
+        Memento mementoToPop = (Memento) gestionnaireCommande.redo();
+        if (mementoToPop != null){
+            this.perspectiveDroite.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveMilieu.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.currentProjectImageContainer.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveDroite.getImageView().setX(mementoToPop.getxImageDroite());
+            this.perspectiveDroite.getImageView().setY(mementoToPop.getyImageDroite());
+            this.perspectiveDroite.setZoomPourcentage(mementoToPop.getZoomPourcentageImageDroite());
+
+
+            this.perspectiveMilieu.getImageView().setX(mementoToPop.getxImageMilieu());
+            this.perspectiveMilieu.getImageView().setY(mementoToPop.getyImageMilieu());
+            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
+
+            this.perspectiveMilieu.notifyObservers();
+            this.perspectiveDroite.notifyObservers();
+            this.currentProjectImageContainer.notifyObservers();
+        }
+
     }
 
 
@@ -86,6 +136,66 @@ public class CurrentProjectState extends Subject {
             throw new IllegalArgumentException("Invalid perspective value: " + perspective);
         }
     }
+
+
+
+    private class Memento implements MementoIF {
+
+
+
+        private String imagePath;
+        private double xImageMilieu;
+        private double yImageMilieu;
+        private double xImageDroite;
+        private double yImageDroite;
+        private double zoomPourcentageImageMilieu;
+        private double zoomPourcentageImageDroite;
+
+
+        public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
+
+
+            this.xImageDroite = perspectiveDroite.getImageView().getX();
+            this.yImageDroite = perspectiveDroite.getImageView().getY();
+            this.xImageMilieu = perspectiveMilieu.getImageView().getX();
+            this.yImageMilieu = perspectiveMilieu.getImageView().getY();
+            this.zoomPourcentageImageDroite = perspectiveDroite.getZoomPourcentage();
+            this.zoomPourcentageImageMilieu = perspectiveMilieu.getZoomPourcentage();
+
+            this.imagePath = currentProjectImageContainer.getPath();
+
+
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public double getxImageMilieu() {
+            return xImageMilieu;
+        }
+
+        public double getyImageMilieu() {
+            return yImageMilieu;
+        }
+
+        public double getxImageDroite() {
+            return xImageDroite;
+        }
+
+        public double getyImageDroite() {
+            return yImageDroite;
+        }
+
+        public double getZoomPourcentageImageMilieu() {
+            return zoomPourcentageImageMilieu;
+        }
+
+        public double getZoomPourcentageImageDroite() {
+            return zoomPourcentageImageDroite;
+        }
+    }
+
 
 
 }

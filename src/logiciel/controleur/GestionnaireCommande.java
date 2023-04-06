@@ -1,22 +1,24 @@
 package logiciel.controleur;
 
-import logiciel.memento.Memento;
+import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
+import logiciel.vue.VerticalBoxPrincipal;
 
 import java.util.Stack;
 
 public class GestionnaireCommande {
 
     private static GestionnaireCommande instance;
-    private Stack<Memento> pileDeCommande;
+    private Stack<MementoIF> pileDeCommande;
     //a chaque fois quon exectue une autre action a lexterieur de undo/redo, on vide la pile
-    private Stack<Memento> pileDeUndo;
+    private Stack<MementoIF> pileDeUndo;
     private CurrentProjectState cps;
+    private VerticalBoxPrincipal verticalBoxPrincipal;
 
 
     private GestionnaireCommande(){
-        this.pileDeCommande = new Stack<Memento>();
-        this.pileDeUndo = new Stack<Memento>();
+        this.pileDeCommande = new Stack<MementoIF>();
+        this.pileDeUndo = new Stack<MementoIF>();
 
     }
 
@@ -31,8 +33,24 @@ public class GestionnaireCommande {
 
     }
 
-    private Memento undo(){
-        return pileDeCommande.pop();
+    public MementoIF undo(){
+        if(!this.pileDeCommande.empty()){
+
+//            this.pileDeUndo.add(pileDeCommande.peek());
+
+            return pileDeCommande.pop();
+
+        }
+        return null;
+    }
+
+    public MementoIF redo(){
+        if(!this.pileDeUndo.empty()){
+
+//            this.pileDeCommande.add(pileDeUndo.peek());
+            return pileDeUndo.pop();
+        }
+        return null;
     }
 
 
@@ -40,19 +58,19 @@ public class GestionnaireCommande {
         GestionnaireCommande.instance = instance;
     }
 
-    public Stack<Memento> getPileDeCommande() {
+    public Stack<MementoIF> getPileDeCommande() {
         return pileDeCommande;
     }
 
-    public void setPileDeCommande(Stack<Memento> pileDeCommande) {
+    public void setPileDeCommande(Stack<MementoIF> pileDeCommande) {
         this.pileDeCommande = pileDeCommande;
     }
 
-    public Stack<Memento> getPileDeUndo() {
+    public Stack<MementoIF> getPileDeUndo() {
         return pileDeUndo;
     }
 
-    public void setPileDeUndo(Stack<Memento> pileDeUndo) {
+    public void setPileDeUndo(Stack<MementoIF> pileDeUndo) {
         this.pileDeUndo = pileDeUndo;
     }
 
@@ -62,5 +80,13 @@ public class GestionnaireCommande {
 
     public void setCps(CurrentProjectState cps) {
         this.cps = cps;
+    }
+
+    public VerticalBoxPrincipal getVerticalBoxPrincipal() {
+        return verticalBoxPrincipal;
+    }
+
+    public void setVerticalBoxPrincipal(VerticalBoxPrincipal verticalBoxPrincipal) {
+        this.verticalBoxPrincipal = verticalBoxPrincipal;
     }
 }

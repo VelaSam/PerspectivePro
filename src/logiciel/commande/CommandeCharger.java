@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logiciel.controleur.GestionnaireCommande;
+import logiciel.memento.MementoIF;
 import logiciel.modele.ImageContainer;
 
 import java.io.File;
@@ -12,6 +13,11 @@ import java.net.MalformedURLException;
 public class CommandeCharger implements Commande{
     @Override
     public void execute() {
+
+        GestionnaireCommande gc = GestionnaireCommande.getInstance();
+
+        MementoIF memento = gc.getCps().save();
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open File");
 
@@ -25,7 +31,6 @@ public class CommandeCharger implements Commande{
         if (selectedFile != null) {
             System.out.println(selectedFile.getAbsolutePath());
 
-            GestionnaireCommande gc = GestionnaireCommande.getInstance();
 
             gc.getCps().setCurrentProjectImage(selectedFile.getPath());
 

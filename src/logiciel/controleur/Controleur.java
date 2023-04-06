@@ -2,15 +2,23 @@ package logiciel.controleur;
 
 import javafx.stage.FileChooser;
 import logiciel.commande.*;
+import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
 import logiciel.vue.VerticalBoxPrincipal;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Controleur {
 
     private VerticalBoxPrincipal vbp;
     private Commande commande;
+
+
+    private AtomicReference<Double> ecartHM = new AtomicReference<>((double) 0);
+    private AtomicReference<Double> ecartVM = new AtomicReference<>((double) 0);
+    private AtomicReference<Double> ecartHD = new AtomicReference<>((double) 0);
+    private AtomicReference<Double> ecartVD = new AtomicReference<>((double) 0);
 
     public Controleur(VerticalBoxPrincipal vbp){
         this.vbp = vbp;
@@ -18,6 +26,10 @@ public class Controleur {
 
     }
     public void executeCommand(){
+
+        if(!(commande instanceof CommandUndo) && !(commande instanceof CommandRedo)){
+            emptyRedoStack();
+        }
         commande.execute();
     }
 
@@ -45,16 +57,39 @@ public class Controleur {
         });
 
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnMousePressed(e->{
-            this.setCommande(new CommandTranslate(e, vbp.getPanneauMilieu().getPerspective().getImageView()));
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
+
+            ecartHM.set(vbp.getPanneauMilieu().getPerspective().getImageView().getX()-e.getX());
+            ecartVM.set(vbp.getPanneauMilieu().getPerspective().getImageView().getY()-e.getY());
+        });
+
+
+        vbp.getPanneauDroite().getPerspective().getImageView().setOnMousePressed(e->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
+
+            ecartHD.set(vbp.getPanneauDroite().getPerspective().getImageView().getX()-e.getX());
+            ecartVD.set(vbp.getPanneauDroite().getPerspective().getImageView().getY()-e.getY());
+        });
+
+        vbp.getPanneauMilieu().getPerspective().getImageView().setOnMouseDragged(e->{
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauMilieu().getPerspective().getImageView(),ecartHM.get(), ecartVM.get()));
             this.executeCommand();
         });
 
-        vbp.getPanneauDroite().getPerspective().getImageView().setOnMousePressed(e->{
-            this.setCommande(new CommandTranslate(e, vbp.getPanneauDroite().getPerspective().getImageView()));
+        vbp.getPanneauDroite().getPerspective().getImageView().setOnMouseDragged(e->{
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauDroite().getPerspective().getImageView(),ecartHD.get(),ecartVD.get()));
             this.executeCommand();
         });
 
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnScroll(e ->{
+
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
             //zoom
             if(e.getDeltaY() > 0){
                 this.setCommande(new CommandZoomIn(e, CurrentProjectState.CURRENT_PERSPECTIVE_MILIEU));
@@ -68,6 +103,10 @@ public class Controleur {
         });
 
         vbp.getPanneauDroite().getPerspective().getImageView().setOnScroll(e ->{
+
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
             //zoom
             if(e.getDeltaY() > 0){
                 this.setCommande(new CommandZoomIn(e, CurrentProjectState.CURRENT_PERSPECTIVE_DROITE));
@@ -79,6 +118,33 @@ public class Controleur {
                 this.executeCommand();
             }
         });
+
+        vbp.getBoutonUndo().setOnAction(e ->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeUndo().add(memento);
+
+            this.setCommande(new CommandUndo());
+            this.executeCommand();
+        });
+
+        vbp.getBoutonRedo().setOnAction(e -> {
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            if(!gc.getPileDeUndo().empty()){
+                MementoIF memento = gc.getCps().save();
+                gc.getPileDeCommande().add(memento);
+            }
+
+
+            this.setCommande(new CommandRedo());
+            this.executeCommand();
+        });
+
+    }
+
+
+    private void emptyRedoStack(){
+        GestionnaireCommande.getInstance().getPileDeUndo().clear();
 
     }
 
