@@ -34,7 +34,23 @@ public class GestionnaireCommande {
     }
 
     public MementoIF undo(){
-        return pileDeCommande.pop();
+        if(!this.pileDeCommande.empty()){
+
+//            this.pileDeUndo.add(pileDeCommande.peek());
+
+            return pileDeCommande.pop();
+
+        }
+        return null;
+    }
+
+    public MementoIF redo(){
+        if(!this.pileDeUndo.empty()){
+
+//            this.pileDeCommande.add(pileDeUndo.peek());
+            return pileDeUndo.pop();
+        }
+        return null;
     }
 
 

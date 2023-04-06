@@ -26,8 +26,11 @@ public class Controleur {
 
     }
     public void executeCommand(){
-        commande.execute();
 
+        if(!(commande instanceof CommandUndo) && !(commande instanceof CommandRedo)){
+            emptyRedoStack();
+        }
+        commande.execute();
     }
 
     public void initSauvegarde(){
@@ -52,6 +55,7 @@ public class Controleur {
             this.setCommande(new CommandeCharger());
             this.executeCommand();
         });
+
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnMousePressed(e->{
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
             MementoIF memento = gc.getCps().save();
@@ -82,6 +86,7 @@ public class Controleur {
         });
 
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnScroll(e ->{
+
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
             MementoIF memento = gc.getCps().save();
             gc.getPileDeCommande().add(memento);
@@ -98,6 +103,7 @@ public class Controleur {
         });
 
         vbp.getPanneauDroite().getPerspective().getImageView().setOnScroll(e ->{
+
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
             MementoIF memento = gc.getCps().save();
             gc.getPileDeCommande().add(memento);
@@ -114,10 +120,31 @@ public class Controleur {
         });
 
         vbp.getBoutonUndo().setOnAction(e ->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeUndo().add(memento);
 
             this.setCommande(new CommandUndo());
             this.executeCommand();
         });
+
+        vbp.getBoutonRedo().setOnAction(e -> {
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            if(!gc.getPileDeUndo().empty()){
+                MementoIF memento = gc.getCps().save();
+                gc.getPileDeCommande().add(memento);
+            }
+
+
+            this.setCommande(new CommandRedo());
+            this.executeCommand();
+        });
+
+    }
+
+
+    private void emptyRedoStack(){
+        GestionnaireCommande.getInstance().getPileDeUndo().clear();
 
     }
 

@@ -66,6 +66,34 @@ public class CurrentProjectState extends Subject {
 
     }
 
+    public void getBack(){
+
+        GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
+
+        Memento mementoToPop = (Memento) gestionnaireCommande.redo();
+        if (mementoToPop != null){
+            this.perspectiveDroite.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveMilieu.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.currentProjectImageContainer.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+
+            this.perspectiveDroite.getImageView().setX(mementoToPop.getxImageDroite());
+            this.perspectiveDroite.getImageView().setY(mementoToPop.getyImageDroite());
+            this.perspectiveDroite.setZoomPourcentage(mementoToPop.getZoomPourcentageImageDroite());
+
+
+            this.perspectiveMilieu.getImageView().setX(mementoToPop.getxImageMilieu());
+            this.perspectiveMilieu.getImageView().setY(mementoToPop.getyImageMilieu());
+            this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
+
+            this.perspectiveMilieu.notifyObservers();
+            this.perspectiveDroite.notifyObservers();
+            this.currentProjectImageContainer.notifyObservers();
+        }
+
+    }
+
 
     public ImageContainer getCurrentProjectImage() {
         return currentProjectImageContainer;

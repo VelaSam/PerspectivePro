@@ -8,11 +8,8 @@ public class CommandUndo implements Commande {
     @Override
     public void execute() {
 
-
         GestionnaireCommande gc = GestionnaireCommande.getInstance();
 
         gc.getCps().restore();
-
-
     }
 }
