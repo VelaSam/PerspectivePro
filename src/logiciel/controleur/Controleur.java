@@ -82,6 +82,9 @@ public class Controleur {
         });
 
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnScroll(e ->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
             //zoom
             if(e.getDeltaY() > 0){
                 this.setCommande(new CommandZoomIn(e, CurrentProjectState.CURRENT_PERSPECTIVE_MILIEU));
@@ -95,6 +98,9 @@ public class Controleur {
         });
 
         vbp.getPanneauDroite().getPerspective().getImageView().setOnScroll(e ->{
+            GestionnaireCommande gc = GestionnaireCommande.getInstance();
+            MementoIF memento = gc.getCps().save();
+            gc.getPileDeCommande().add(memento);
             //zoom
             if(e.getDeltaY() > 0){
                 this.setCommande(new CommandZoomIn(e, CurrentProjectState.CURRENT_PERSPECTIVE_DROITE));
