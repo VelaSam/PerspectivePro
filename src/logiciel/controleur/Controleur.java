@@ -206,10 +206,12 @@ public class Controleur {
                 //PerspectiveGauche
                 gc.getCps().getCurrentProjectImage().getImageView().setImage(new Image("file:\\"+cps.getCurrentProjectImage().getPath()));
                 //PerspectiveMilieu
+                gc.getCps().getPerspectiveMilieu().getImageView().setImage(new Image("file:\\"+cps.getCurrentProjectImage().getPath()));
                 gc.getCps().getPerspectiveMilieu().getImageView().setX(cps.getPerspectiveMilieu().getPositionX());
                 gc.getCps().getPerspectiveMilieu().getImageView().setY(cps.getPerspectiveMilieu().getPositionY());
                 gc.getCps().getPerspectiveMilieu().setZoomPourcentage(cps.getPerspectiveMilieu().getZoomPourcentage());
                 //PerspectiveDroite
+                gc.getCps().getPerspectiveDroite().getImageView().setImage(new Image("file:\\"+cps.getCurrentProjectImage().getPath()));
                 gc.getCps().getPerspectiveDroite().getImageView().setX(cps.getPerspectiveDroite().getPositionX());
                 gc.getCps().getPerspectiveDroite().getImageView().setY(cps.getPerspectiveDroite().getPositionY());
                 gc.getCps().getPerspectiveDroite().setZoomPourcentage(cps.getPerspectiveDroite().getZoomPourcentage());
