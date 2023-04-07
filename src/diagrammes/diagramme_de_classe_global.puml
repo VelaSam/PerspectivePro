@@ -229,29 +229,44 @@ legend top left
     }
 
     class VerticalBoxPrincipal #42b883 {
-
         -panneauDImages: HBox
         -panneauGauche: PanneauStatique
         -panneauMilieu: PanneauDynamique
         -panneauDroite: PanneauDynamique
-
         -barreSelection: MenuBar
-
+        -file: Menu
         -boutonSauvegarde: MenuItem
-        -boutonCharger: MenuItem
-
+        -boutonchargerImage: MenuItem
+        -boutonChargerProjet: MenuItem
+        -sectionBas: HBox
         -boutonUndo: Button
         -boutonRedo: Button
 
+        +VerticalBoxPrincipal(ps: Stage, ps: PanneauStatique, pdM: PanneauDynamique, pdD: PanneauDynamique)
+        +getPanneauDImage(): HBox
+        +getPanneauGauche(): PanneauStatique
+        +getPanneauDroite(): PanneauDynamique
+        +getBarreSelection(): MenuBar
+        +getBoutonSauvegarde(): MenuItem
+        +getBoutonChargerImage(): MenuItem
+        +getSectionBas: HBox
+        +getBoutonUndo(): Button
+        +getBoutonRedo(): Button
+        +update(s: Subject)
+        +getBoutonChargerProject(): MenuItem
     }
 
-    class PanneauStatique #42b883 implements Observer{
+    class PanneauStatique #42b883 extends AbstractPanneau implements Observer{
+        -imageContainer: ImageContainer
 
-        -image: Image
-        -imageView: ImageView
+        +PanneauStatique(i: ImageContainer)
+        +getImage(): ImageContainer
+        +getImageView(): ImageView
+        +setImage(i: ImageContainer)
+        +update(s: Subject)
     }
 
-    class PanneauDynamique #42b883 implements Observer{
+    class PanneauDynamique #42b883 extends AbstractPanneau implements Observer{
         -paneBackground: Border
         -perspective: Perspective
 
@@ -261,7 +276,6 @@ legend top left
         +update(s: Subject)
     }
     '-------------VUE--------------'
-
 
    Observer -o Subject
    Controleur -l-> GestionnaireCommande : Utilise
@@ -295,6 +309,12 @@ legend top left
    PanneauStatique o- ImageContainer
 
    CurrentProjectState --> GestionnaireCommande : Utilise
+
+
+
+
+
+
 
 
 @enduml

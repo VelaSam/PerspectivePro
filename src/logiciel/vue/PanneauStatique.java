@@ -11,10 +11,6 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
 
     private ImageContainer imageContainer;
 
-
-
-
-
     public PanneauStatique(ImageContainer imageContainer) {
         super();
         this.imageContainer = imageContainer;
