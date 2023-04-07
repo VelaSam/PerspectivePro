@@ -1,6 +1,7 @@
 package logiciel.controleur;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -42,6 +43,12 @@ public class Start extends Application {
         PanneauDynamique panneauMilieu = new PanneauDynamique(perspectiveMilieu);
         PanneauDynamique panneauDroite = new PanneauDynamique(perspectiveDroite);
 
+        imageCIdle.getImageView().setX(110);
+        imageCIdle.getImageView().setY(200);
+
+
+
+
 
         verticalBoxPrincipal = new VerticalBoxPrincipal(primaryStage, panneauIdle, panneauMilieu, panneauDroite);
         controler = new Controleur(verticalBoxPrincipal);
@@ -65,5 +72,15 @@ public class Start extends Application {
 
     public VerticalBoxPrincipal getVerticalBoxPrincipal() {
         return verticalBoxPrincipal;
+    }
+
+    private class ImageView extends javafx.scene.image.ImageView{
+
+        public ImageView(String path){
+
+            this.setImage(new Image(path));
+            this.setX(110);
+            this.setY(200);
+        }
     }
 }

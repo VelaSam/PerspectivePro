@@ -1,6 +1,7 @@
 package logiciel.controleur;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -129,6 +130,15 @@ public class Controleur {
 
             this.setCommande(new CommandUndo());
             this.executeCommand();
+        });
+
+        vbp.setOnKeyPressed(event ->  {
+                if (event.getCode() == KeyCode.Z && event.isControlDown()) {
+
+                    this.setCommande(new CommandUndo());
+                    this.executeCommand();
+                }
+
         });
 
         vbp.getBoutonRedo().setOnAction(e -> {

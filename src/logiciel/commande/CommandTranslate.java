@@ -24,18 +24,17 @@ public class CommandTranslate implements Commande{
     public void execute() {
 
 
+        double positionX = event.getX()+ ecartH;
+        double positionY = event.getY()+ ecartV;
 
-                double positionX = event.getX()+ ecartH;
-                double positionY = event.getY()+ ecartV;
+        //Prendre positionX et additioner une rapport du zoom avec le scale
+        if(positionX >= 0 ){
+            currentImageView.setX(positionX);
+        }
 
-                //Prendre positionX et additioner une rapport du zoom avec le scale
-                if(positionX >= 0 ){
-                    currentImageView.setX(positionX);
-                }
-
-                if(positionY>=0){
-                    currentImageView.setY(positionY);
-                }
+        if(positionY>=0){
+            currentImageView.setY(positionY);
+        }
 
 
 

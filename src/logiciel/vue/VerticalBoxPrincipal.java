@@ -42,9 +42,9 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
 
         barreSelection = new MenuBar();
         file = new Menu("File");
-        boutonChargerImage = new MenuItem("ChargerImage");
+        boutonChargerImage = new MenuItem("Charger Image");
         boutonSauvegarde = new MenuItem("Sauvegarder");
-        boutonChargerProjet = new MenuItem("ChargerProjet");
+        boutonChargerProjet = new MenuItem("Charger Projet");
 
         file.getItems().addAll(boutonSauvegarde, boutonChargerImage, boutonChargerProjet);
         barreSelection.getMenus().add(file);
