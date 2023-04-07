@@ -32,7 +32,11 @@ public class CommandeCharger implements Commande{
             System.out.println(selectedFile.getAbsolutePath());
 
 
-            gc.getCps().setCurrentProjectImage(selectedFile.getPath());
+
+            gc.getCps().getCurrentProjectImage()
+            gc.getCps().getCurrentProjectImage().getImageView().setImage(new Image("file:\\"+selectedFile.getAbsolutePath()));
+            gc.getCps().getPerspectiveMilieu().getImageView().setImage(new Image("file:\\"+selectedFile.getAbsolutePath()));
+            gc.getCps().getPerspectiveDroite().getImageView().setImage(new Image("file:\\"+selectedFile.getAbsolutePath()));
 
 
         } else{
