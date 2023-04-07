@@ -7,6 +7,8 @@ import logiciel.observateur.Subject;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.CurrentProjectState;
 import logiciel.modele.ImageContainer;
+import javafx.scene.layout.Pane;
+import logiciel.modele.ImageContainer;
 import logiciel.modele.Perspective;
 
 public class PanneauDynamique extends AbstractPanneau implements Observer {

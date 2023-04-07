@@ -20,17 +20,16 @@ legend top left
 
     '----------OBSERVER--------------'
     interface Observer #FEFFA5{
-        +update(args: Subject)
+        +update(s: Subject)
     }
 
-    interface Subject #FEFFA5{
+    abstract class Subject #FEFFA5{
         -observers: Observer<>
-        -mainState
 
         +attachObserver(o: Observer)
         +detachObserver(o: Observer)
         +notifyObservers()
-
+        +clearObservers()
     }
     '-----------OBSERVER--------------'
 
@@ -41,20 +40,34 @@ legend top left
         +execute()
     }
 
-    class CommandTranslate #F5B0CB implements Commande{
+    class CommandeCharger #F5B0CB implements Commande {
         +execute()
-   
     }
 
+    class CommandTranslate #F5B0CB implements Commande{
+        -currentImageView: ImageView
+        -event: MouseEvent
+        -ecartH: double
+        -ecartV: double
+
+        +CommandTranslate(e: MouseEvent, iV: ImageView, eH: double, eV: double)
+        +execute()
+    }
 
     class CommandZoomIn #F5B0CB implements Commande{
+        -e: ScrollEvent
+        -perspective: int
+
+        +CommandZoomIn(e: ScrollEvent, p: int)
         +execute()
-   
     }
 
     class CommandZoomOut #F5B0CB implements Commande{
+        +e: ScrollEvent
+        -perspective: int
+
+        +CommandZoomOut(e: ScrollEvent, p: int)
         +execute()
-   
     }
 
     class CommandUndo #F5B0CB implements Commande{
@@ -72,26 +85,30 @@ legend top left
     class CommandSetDroite #F5B0CB implements Commande{
         +execute()
     }
-
-
     '-----------COMMAND--------------'
 
 
     '-----------SINGLETON--------------'
-
-
     class GestionnaireCommande #dea2eb{
         -instance: GestionnaireCommande
         -cps: currentProjectState
-        -pileDeCommande: Stack<Memento>
-        -pileDeUndo  : Stack<Memento>
-
+        -pileDeCommande: Stack<MementoIF>
+        -pileDeUndo: Stack<MementoIF>
+        -verticalBoxPrincipal: VerticalBoxPrincipal
 
         -GestionnaireCommande()
-        + {static} getInstance(): GestionnaireCommande
-
-        +undo() : Memento
-
+        +{static} getInstance(): GestionnaireCommande
+        +getPileDeCommande(): Stack<MementoIF>
+        +getPileDeUndo(): Stack<MementoIF>
+        +getCps(): CurrentProjectState
+        +getVerticalBoxPrincipal(): VerticalBoxPrincipal
+        +{static} setInstance(i: GestionnaireCommande)
+        +setPileDeCommande(p: Stack<MementoIF>)
+        +setPileDeUndo(p: Stack<MementoIF>)
+        +setCps(cps: CurrentProjectState)
+        +setVerticalBoxPrincipal(v: VerticalBoxPrincipal)
+        +undo(): MementoIF
+        +redo(): MementoIF
     }
     '-----------SINGLETON--------------'
 
@@ -100,68 +117,116 @@ legend top left
     'Originator = CurrentProjectState'
     'Caretaker = GestionnaireDeCommande'
 
-    class Memento #2CEAA3{
-
-        '{static}+PERSPECTIVE_CENTRE
-        '{static}+PERSPECTIVE_DROITE
-
-        -image: currentProjectImage
-        -perspectiveMilieu: Perspective
-        -perspectiveDroite: Perspective
-
-        'Constructeur'
-        +Memento(image, perspectiveMilieu, perspectiveDroite)
-        'Getters du memento'
-        +getImage()
-        +getPerspectiveMilieu()
-        +getPerspectiveDroite()
+    interface MementoIF #2CEAA3{
     }
 
+    class Memento #2CEAA3 implements MementoIF {
+        -imagePath: String
+        -xImageMilieu: double
+        -yImageMilieu: double
+        -xImageDroite: double
+        -yImageDroite: double
+        -zoomPourcentageImageMilieu: double
+        -zoomPourcentageImageDroite: double
 
+        +Memento(c: ImageContainer, pM: Perspective, pD: Perspective)
+        +getImagePath(): String
+        +getxImageMilieu(): double
+        +getyImageMilieu(): double
+        +getxImageDroite(): double
+        +getyImageDroite(): double
+        +getZoomPourcentageImageMilieu(): double
+        +getZoomPourcentageImageDroite(): double
+    }
     '-----------MEMENTO--------------'
 
-
-
+    '----------MODELE-----------------'
     class CurrentProjectState #a2c5eb implements Subject {
 
         -currentPerspective: int
-        -image: currentProjectImage
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
+        -currentProjectImageContainer: ImageContainer
 
-        +makeMemento()
-        +restore(m : Memento)
-        'restore() vas appeler undo() Gestionnaire Commande
+        +CurrentProjectState(c: ImageContainer, pM: Perspective, pD: Perspective)
+        +save(): MementoIF
+        +restore()
+        +getBack()
+        +getCurrentProjectImage(): ImageContainer
+        +getPerspectiveMilieu(): Perspective
+        +getPerspectiveDroite(): Perspective
+        +getPerspective(p: int): Perspective
+        +setCurrentProjectImage(c: String)
+        +setPerspectiveMilieu(p: Perspective)
+        +setPerspectiveDroite(p: Perspective)
     }
 
+    class ImageContainer #a2c5eb extends Subject {
+        -path: String
+        -image: ImageView
 
-    class Perspective #a2c5eb implements Subject{
+        +ImageContainer(path: String)
+        +close(): ImageContainer
+        +changeImage(path: String)
+        +getImageView(): ImageView
+        +getPath(): String
+    }
 
+    class Perspective #a2c5eb extends Subject{
         -imageView: ImageView
         -positionX: double
         -positionY: double
         -zoomPourcentage: double
 
-
-        +translate(x:double, y:double)
-        +zoom(pourcentage: double)
-
+        +Perspective(iv: ImageView)
+        +close(): Perspective
+        +changeImage(p: String)
+        +getImageView(): ImageView
+        +getPositionX(): double
+        +getPositionY(): double
+        +getZoomPourcentage(): double
+        +setImageView(iv: ImageView)
+        +setPositionX(p: double)
+        +setPositionY(p: double)
+        +setZoomPourcentage(z: double)
     }
+    '----------MODELE-----------------'
 
-    class Image #a2c5eb implements Subject{
-
-        -path: String
-    }
-
+    '---------CONTROLEUR--------------'
     class Controleur #dea2eb{
+        -commande: Commande
+        -vbp: VerticalBoxPrincipal
+        -ecartHM: AtomicReference<Double>
+        -ecartBM: AtomicReference<Double>
+        -ecartHD: AtomicReference<Double>
+        -ecartVD: AtomicReference<Double>
 
-        -command: Commande
+        +Controleur(vbp: VerticalBoxPrincipal)
         +setCommand(c: Commande)
+        +getVbp(): VerticalBoxPrincipal
+        +initActionButtons()
         +executeCommand()
-
         +initSauvegarde()
+        +emptyRedoStack()
     }
 
+    class Start #dea2eb {
+        -verticalBoxPrincipal: VerticalBoxPrincipal
+        -controleur: Controleur
+
+        +{static} main(String[] args)
+        +start(p: Stage)
+        +getVerticalBoxPrincipal(): VerticalBoxPrincipal
+    }
+    '---------CONTROLEUR--------------'
+
+    '-------------VUE--------------'
+    abstract class AbstractPanneau #42b883 {
+        +paneBorder: Border
+        +paneBackground: Background
+
+        #AbstractPanneau()
+    }
 
     class VerticalBoxPrincipal #42b883 {
 
@@ -180,7 +245,6 @@ legend top left
 
     }
 
-
     class PanneauStatique #42b883 implements Observer{
 
         -image: Image
@@ -188,63 +252,49 @@ legend top left
     }
 
     class PanneauDynamique #42b883 implements Observer{
-
-        -currentStrategy: Strategy
-        -setStrategy: Strategy
-        -image: Image
+        -paneBackground: Border
         -perspective: Perspective
+
+        +PanneauDynamique(p: Perspective)
+        +getPerspective(): Perspective
+        +setPerspective(p: Perspective)
+        +update(s: Subject)
     }
-
-    interface StrategyHover #7287DF {
-
-        +setHover()
-    }
-
-    class StrategyHoverMilieu #7287DF implements StrategyHover {
-
-        +setHover()
-    }
-
-    class StrategyHoverDroite #7287DF implements StrategyHover{
-
-        +setHover()
-    }
+    '-------------VUE--------------'
 
 
-    PanneauDynamique o- StrategyHover
    Observer -o Subject
    Controleur -l-> GestionnaireCommande : Utilise
    CurrentProjectState <-- Controleur : Modifie
    Perspective <-- Controleur : Modifie
-   Image <- Controleur : Modifie
+   ImageContainer <- Controleur : Modifie
    Controleur o-- Commande
+   Start -> ImageContainer : Utilise
+   Start -> Perspective: Utilise
+   Start -> PanneauStatique: Utilise
+   Start -> PanneauDynamique: Utilise
+   Start -> GestionnaireCommande : Utilise
 
    VerticalBoxPrincipal o-- PanneauDynamique
    VerticalBoxPrincipal o-up- PanneauStatique
 
+   CurrentProjectState o- Memento
    CurrentProjectState o- Perspective
-   CurrentProjectState o- Image
+   CurrentProjectState o- ImageContainer
 
    VerticalBoxPrincipal -- Controleur
 
    Memento ---o GestionnaireCommande
    CurrentProjectState --> Memento
 
-
-   PanneauDynamique o-- Image
-   Image --> PanneauDynamique
+   PanneauDynamique o-- ImageContainer
+   ImageContainer --> PanneauDynamique
 
    PanneauDynamique o-- Perspective
 
-   PanneauStatique o- Image
+   PanneauStatique o- ImageContainer
 
    CurrentProjectState --> GestionnaireCommande : Utilise
-   
-
-
-
-
-
 
 
 @enduml
@@ -252,11 +302,11 @@ legend top left
 Command = Invoker
 Perspective = Panel
 
-Chaque panneau va chercher du modele 
+Chaque panneau va chercher du modele
 les informations de sa perspective respective
 
 L'image implémente Subject car durant lexecution
 lutilisateur doit pouvoir changer l'image quand qu'il veut
 
-Perspective implémente Subject pour actualiser le tout lors 
-des Commandes 
+Perspective implémente Subject pour actualiser le tout lors
+des Commandes
