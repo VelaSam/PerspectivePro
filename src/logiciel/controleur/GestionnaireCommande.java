@@ -19,7 +19,6 @@ public class GestionnaireCommande {
     private GestionnaireCommande(){
         this.pileDeCommande = new Stack<MementoIF>();
         this.pileDeUndo = new Stack<MementoIF>();
-
     }
 
     public static GestionnaireCommande getInstance(){

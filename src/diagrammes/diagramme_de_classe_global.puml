@@ -105,14 +105,14 @@ legend top left
         '{static}+PERSPECTIVE_CENTRE
         '{static}+PERSPECTIVE_DROITE
 
-        -image: currentProjectImage
+        -currentProjectImage: Image
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
 
         'Constructeur'
         +Memento(image, perspectiveMilieu, perspectiveDroite)
         'Getters du memento'
-        +getImage()
+        +getCurrentProjectImage()
         +getPerspectiveMilieu()
         +getPerspectiveDroite()
     }
@@ -125,7 +125,7 @@ legend top left
     class CurrentProjectState #a2c5eb implements Subject {
 
         -currentPerspective: int
-        -image: currentProjectImage
+        -currentProjectImage: Image
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
 

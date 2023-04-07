@@ -23,6 +23,7 @@ public class ImageContainer  extends Subject implements Serializable {
     public ImageContainer clone() {
         return new ImageContainer(this.path);
     }
+
     public void changeImage(String path){
 
         this.image = new ImageView("file:/"+path);
