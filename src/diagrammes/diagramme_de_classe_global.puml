@@ -1,7 +1,7 @@
 @startuml
 
 
-skinparam backgroundColor #EEEBDC
+'skinparam backgroundColor #EEEBDC
 
 legend top left
  |= Color  |= Package |
@@ -50,7 +50,6 @@ legend top left
         -ecartH: double
         -ecartV: double
 
-        +CommandTranslate(e: MouseEvent, iV: ImageView, eH: double, eV: double)
         +execute()
     }
 
@@ -58,7 +57,6 @@ legend top left
         -e: ScrollEvent
         -perspective: int
 
-        +CommandZoomIn(e: ScrollEvent, p: int)
         +execute()
     }
 
@@ -66,7 +64,6 @@ legend top left
         +e: ScrollEvent
         -perspective: int
 
-        +CommandZoomOut(e: ScrollEvent, p: int)
         +execute()
     }
 
@@ -75,14 +72,6 @@ legend top left
     }
 
     class CommandRedo #F5B0CB implements Commande{
-        +execute()
-    }
-
-    class CommandSetMilieu #F5B0CB implements Commande{
-        +execute()
-    }
-
-    class CommandSetDroite #F5B0CB implements Commande{
         +execute()
     }
     '-----------COMMAND--------------'
@@ -96,17 +85,6 @@ legend top left
         -pileDeUndo: Stack<MementoIF>
         -verticalBoxPrincipal: VerticalBoxPrincipal
 
-        -GestionnaireCommande()
-        +{static} getInstance(): GestionnaireCommande
-        +getPileDeCommande(): Stack<MementoIF>
-        +getPileDeUndo(): Stack<MementoIF>
-        +getCps(): CurrentProjectState
-        +getVerticalBoxPrincipal(): VerticalBoxPrincipal
-        +{static} setInstance(i: GestionnaireCommande)
-        +setPileDeCommande(p: Stack<MementoIF>)
-        +setPileDeUndo(p: Stack<MementoIF>)
-        +setCps(cps: CurrentProjectState)
-        +setVerticalBoxPrincipal(v: VerticalBoxPrincipal)
         +undo(): MementoIF
         +redo(): MementoIF
     }
@@ -128,15 +106,6 @@ legend top left
         -yImageDroite: double
         -zoomPourcentageImageMilieu: double
         -zoomPourcentageImageDroite: double
-
-        +Memento(c: ImageContainer, pM: Perspective, pD: Perspective)
-        +getImagePath(): String
-        +getxImageMilieu(): double
-        +getyImageMilieu(): double
-        +getxImageDroite(): double
-        +getyImageDroite(): double
-        +getZoomPourcentageImageMilieu(): double
-        +getZoomPourcentageImageDroite(): double
     }
     '-----------MEMENTO--------------'
 
@@ -148,28 +117,16 @@ legend top left
         -perspectiveDroite: Perspective
         -currentProjectImageContainer: ImageContainer
 
-        +CurrentProjectState(c: ImageContainer, pM: Perspective, pD: Perspective)
         +save(): MementoIF
         +restore()
-        +getBack()
-        +getCurrentProjectImage(): ImageContainer
-        +getPerspectiveMilieu(): Perspective
-        +getPerspectiveDroite(): Perspective
-        +getPerspective(p: int): Perspective
-        +setCurrentProjectImage(c: String)
-        +setPerspectiveMilieu(p: Perspective)
-        +setPerspectiveDroite(p: Perspective)
     }
 
     class ImageContainer #a2c5eb extends Subject {
         -path: String
         -image: ImageView
 
-        +ImageContainer(path: String)
         +close(): ImageContainer
         +changeImage(path: String)
-        +getImageView(): ImageView
-        +getPath(): String
     }
 
     class Perspective #a2c5eb extends Subject{
@@ -178,17 +135,8 @@ legend top left
         -positionY: double
         -zoomPourcentage: double
 
-        +Perspective(iv: ImageView)
         +close(): Perspective
         +changeImage(p: String)
-        +getImageView(): ImageView
-        +getPositionX(): double
-        +getPositionY(): double
-        +getZoomPourcentage(): double
-        +setImageView(iv: ImageView)
-        +setPositionX(p: double)
-        +setPositionY(p: double)
-        +setZoomPourcentage(z: double)
     }
     '----------MODELE-----------------'
 
@@ -201,7 +149,6 @@ legend top left
         -ecartHD: AtomicReference<Double>
         -ecartVD: AtomicReference<Double>
 
-        +Controleur(vbp: VerticalBoxPrincipal)
         +setCommand(c: Commande)
         +getVbp(): VerticalBoxPrincipal
         +initActionButtons()
@@ -216,7 +163,6 @@ legend top left
 
         +{static} main(String[] args)
         +start(p: Stage)
-        +getVerticalBoxPrincipal(): VerticalBoxPrincipal
     }
     '---------CONTROLEUR--------------'
 
@@ -228,7 +174,7 @@ legend top left
         #AbstractPanneau()
     }
 
-    class VerticalBoxPrincipal #42b883 {
+    class VerticalBoxPrincipal #42b883 implements Observer {
         -panneauDImages: HBox
         -panneauGauche: PanneauStatique
         -panneauMilieu: PanneauDynamique
@@ -242,27 +188,12 @@ legend top left
         -boutonUndo: Button
         -boutonRedo: Button
 
-        +VerticalBoxPrincipal(ps: Stage, ps: PanneauStatique, pdM: PanneauDynamique, pdD: PanneauDynamique)
-        +getPanneauDImage(): HBox
-        +getPanneauGauche(): PanneauStatique
-        +getPanneauDroite(): PanneauDynamique
-        +getBarreSelection(): MenuBar
-        +getBoutonSauvegarde(): MenuItem
-        +getBoutonChargerImage(): MenuItem
-        +getSectionBas: HBox
-        +getBoutonUndo(): Button
-        +getBoutonRedo(): Button
         +update(s: Subject)
-        +getBoutonChargerProject(): MenuItem
     }
 
     class PanneauStatique #42b883 extends AbstractPanneau implements Observer{
         -imageContainer: ImageContainer
 
-        +PanneauStatique(i: ImageContainer)
-        +getImage(): ImageContainer
-        +getImageView(): ImageView
-        +setImage(i: ImageContainer)
         +update(s: Subject)
     }
 
@@ -270,39 +201,34 @@ legend top left
         -paneBackground: Border
         -perspective: Perspective
 
-        +PanneauDynamique(p: Perspective)
-        +getPerspective(): Perspective
-        +setPerspective(p: Perspective)
         +update(s: Subject)
     }
     '-------------VUE--------------'
 
-   Observer -o Subject
-   Controleur -l-> GestionnaireCommande : Utilise
-   CurrentProjectState <- Controleur : Modifie
-   Perspective <- Controleur : Modifie
-   ImageContainer <- Controleur : Modifie
+   Observer --o Subject
+   Controleur -> GestionnaireCommande : Utilise
+   CurrentProjectState <--- Controleur : Modifie
+   Perspective <-- Controleur : Modifie
+   ImageContainer <-- Controleur : Modifie
    Controleur o-- Commande
-   Start -> ImageContainer : Utilise
-   Start -> Perspective: Utilise
-   Start -> PanneauStatique: Utilise
-   Start -> PanneauDynamique: Utilise
-   Start -> GestionnaireCommande : Utilise
 
-   VerticalBoxPrincipal o-- PanneauDynamique
-   VerticalBoxPrincipal o-up- PanneauStatique
+   VerticalBoxPrincipal o-down- PanneauDynamique
+   VerticalBoxPrincipal o-down- PanneauStatique
 
-   CurrentProjectState o- Memento
-   CurrentProjectState o- Perspective
-   CurrentProjectState o- ImageContainer
+   'Start -> ImageContainer : Utilise
+   'Start -> Perspective: Utilise
+   'Start -> AbstractPanneau : Utilise
+   'Start -> GestionnaireCommande : Utilise
+
+   CurrentProjectState o-- Memento
+   CurrentProjectState o-down- Perspective
+   CurrentProjectState o-down- ImageContainer
 
    VerticalBoxPrincipal -- Controleur
 
-   CurrentProjectState --> Memento
 
    PanneauDynamique o-- Perspective
-
-   PanneauStatique o- ImageContainer
+   PanneauStatique o---- ImageContainer
 
    CurrentProjectState --> GestionnaireCommande : Utilise
 
