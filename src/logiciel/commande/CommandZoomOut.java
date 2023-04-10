@@ -3,6 +3,7 @@ package logiciel.commande;
 import javafx.scene.input.ScrollEvent;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.CurrentProjectState;
+import logiciel.vue.AbstractPanneau;
 
 public class CommandZoomOut implements Commande {
 

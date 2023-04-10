@@ -23,6 +23,7 @@ public class PanneauDynamique extends AbstractPanneau implements Observer {
         this.perspective = perspective;
         super.getChildren().add(this.perspective.getImageView());
 
+
     }
 
 
@@ -38,8 +39,11 @@ public class PanneauDynamique extends AbstractPanneau implements Observer {
     @Override
     public void update(Subject s) {
 
-        this.perspective.getImageView().setScaleX(this.perspective.getZoomPourcentage());
-        this.perspective.getImageView().setScaleY( this.perspective.getZoomPourcentage());
+        //this.perspective.getImageView().setScaleX(this.perspective.getZoomPourcentage());
+        //this.perspective.getImageView().setScaleY( this.perspective.getZoomPourcentage());
+        this.perspective.getImageView().setFitWidth(this.perspective.getImageView().getImage().getWidth()*this.perspective.getZoomPourcentage());
+        this.perspective.getImageView().setFitHeight(this.perspective.getImageView().getImage().getHeight()*this.perspective.getZoomPourcentage());
+
 
     }
 }
