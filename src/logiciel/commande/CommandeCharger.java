@@ -39,6 +39,7 @@ public class CommandeCharger implements Commande{
             gc.getCps().getPerspectiveDroite().getImageView().setImage(new Image("file:\\"+selectedFile.getAbsolutePath()));
 
 
+
         } else{
             System.out.println("Pas de fichier sélectionner");
         }

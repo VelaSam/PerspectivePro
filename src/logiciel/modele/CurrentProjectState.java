@@ -64,9 +64,13 @@ public class CurrentProjectState extends Subject implements Serializable {
             IVMilieu.setY(mementoToPop.getyImageMilieu());
             this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
 
-//            this.perspectiveMilieu.notifyObservers();
-//            this.perspectiveDroite.notifyObservers();
-//            this.currentProjectImageContainer.notifyObservers();
+            IVMilieu.setFitWidth(IVMilieu.getImage().getWidth()*this.perspectiveMilieu.getZoomPourcentage());
+            IVMilieu.setFitHeight(IVMilieu.getImage().getHeight()*this.perspectiveMilieu.getZoomPourcentage());
+
+            IVDroite.setFitWidth(IVDroite.getImage().getWidth()*this.perspectiveDroite.getZoomPourcentage());
+            IVDroite.setFitHeight(IVDroite.getImage().getHeight()*this.perspectiveDroite.getZoomPourcentage());
+
+
         }
 
     }
@@ -74,27 +78,34 @@ public class CurrentProjectState extends Subject implements Serializable {
     public void getBack(){
 
         GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
+        ImageView IVDroite;
+        ImageView IVMilieu;
+        ImageView IVGauche;
 
         Memento mementoToPop = (Memento) gestionnaireCommande.redo();
         if (mementoToPop != null){
-            this.perspectiveDroite.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+            IVDroite = this.perspectiveDroite.getImageView();
+            IVMilieu = this.perspectiveMilieu.getImageView();
+            IVGauche = this.currentProjectImageContainer.getImageView();
+            IVDroite.setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+            IVMilieu.setImage(new Image("file:\\"+mementoToPop.getImagePath()));
+            IVGauche.setImage(new Image("file:\\"+mementoToPop.getImagePath()));
 
-            this.perspectiveMilieu.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
-
-            this.currentProjectImageContainer.getImageView().setImage(new Image("file:\\"+mementoToPop.getImagePath()));
-
-            this.perspectiveDroite.getImageView().setX(mementoToPop.getxImageDroite());
-            this.perspectiveDroite.getImageView().setY(mementoToPop.getyImageDroite());
+            IVDroite.setX(mementoToPop.getxImageDroite());
+            IVDroite.setY(mementoToPop.getyImageDroite());
             this.perspectiveDroite.setZoomPourcentage(mementoToPop.getZoomPourcentageImageDroite());
 
 
-            this.perspectiveMilieu.getImageView().setX(mementoToPop.getxImageMilieu());
-            this.perspectiveMilieu.getImageView().setY(mementoToPop.getyImageMilieu());
+            IVMilieu.setX(mementoToPop.getxImageMilieu());
+            IVMilieu.setY(mementoToPop.getyImageMilieu());
             this.perspectiveMilieu.setZoomPourcentage(mementoToPop.getZoomPourcentageImageMilieu());
 
-            this.perspectiveMilieu.notifyObservers();
-            this.perspectiveDroite.notifyObservers();
-            this.currentProjectImageContainer.notifyObservers();
+            IVMilieu.setFitWidth(IVMilieu.getImage().getWidth()*this.perspectiveMilieu.getZoomPourcentage());
+            IVMilieu.setFitHeight(IVMilieu.getImage().getHeight()*this.perspectiveMilieu.getZoomPourcentage());
+
+            IVDroite.setFitWidth(IVDroite.getImage().getWidth()*this.perspectiveDroite.getZoomPourcentage());
+            IVDroite.setFitHeight(IVDroite.getImage().getHeight()*this.perspectiveDroite.getZoomPourcentage());
+
         }
 
     }

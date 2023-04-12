@@ -96,6 +96,7 @@ public class Controleur {
 
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
             MementoIF memento = gc.getCps().save();
+
             gc.getPileDeCommande().add(memento);
             //zoom
             if(e.getDeltaY() > 0){

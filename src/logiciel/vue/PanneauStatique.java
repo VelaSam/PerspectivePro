@@ -35,16 +35,5 @@ public class PanneauStatique extends AbstractPanneau implements Observer {
     @Override
     public void update(Subject s) {
 
-        GestionnaireCommande gc = GestionnaireCommande.getInstance();
-        this.imageContainer.getImageView().setImage(new Image("file:/"+gc.getCps().getCurrentProjectImage().getPath()));
-        this.imageContainer.getImageView().setFitWidth(this.imageContainer.getImageView().getImage().getWidth());
-        this.imageContainer.getImageView().setFitHeight(this.imageContainer.getImageView().getImage().getHeight());
-        
-//        super.getChildren().clear();
-//        super.getChildren().add(imageContainer.getImageView());
-
-
-
-
     }
 }

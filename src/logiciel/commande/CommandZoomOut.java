@@ -26,6 +26,8 @@ public class CommandZoomOut implements Commande {
                 gc.getCps().getPerspectiveMilieu().setZoomPourcentage(
                         gc.getCps().getPerspectiveMilieu().getZoomPourcentage()-0.05
                 );
+                gc.getCps().getPerspectiveMilieu().getImageView().setFitWidth(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getWidth()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
+                gc.getCps().getPerspectiveMilieu().getImageView().setFitHeight(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getHeight()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
             }
         } else if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_DROITE){
             if(gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.05 > 0){
@@ -33,6 +35,8 @@ public class CommandZoomOut implements Commande {
                 gc.getCps().getPerspectiveDroite().setZoomPourcentage(
                         gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.05
                 );
+                gc.getCps().getPerspectiveDroite().getImageView().setFitWidth(gc.getCps().getPerspectiveDroite().getImageView().getImage().getWidth()*gc.getCps().getPerspectiveDroite().getZoomPourcentage());
+                gc.getCps().getPerspectiveDroite().getImageView().setFitHeight(gc.getCps().getPerspectiveDroite().getImageView().getImage().getHeight()*gc.getCps().getPerspectiveDroite().getZoomPourcentage());
             }
         }
 

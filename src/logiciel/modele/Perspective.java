@@ -36,7 +36,6 @@ public class Perspective extends Subject implements Serializable {
 
     public void changeImage(String path){
         this.imageView = new ImageView("file:/"+path);
-        super.notifyObservers();
     }
 
     public ImageView getImageView() {
@@ -78,6 +77,5 @@ public class Perspective extends Subject implements Serializable {
 
     public void setZoomPourcentage(double zoomPourcentage) {
         this.zoomPourcentage = zoomPourcentage;
-        notifyObservers();
     }
 }
