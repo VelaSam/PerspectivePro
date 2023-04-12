@@ -23,6 +23,7 @@ public class Controleur {
     private AtomicReference<Double> ecartVM = new AtomicReference<>((double) 0);
     private AtomicReference<Double> ecartHD = new AtomicReference<>((double) 0);
     private AtomicReference<Double> ecartVD = new AtomicReference<>((double) 0);
+    private static int compteur = 1;
 
     public Controleur(VerticalBoxPrincipal vbp){
         this.vbp = vbp;
@@ -174,8 +175,8 @@ public class Controleur {
             // Show the file chooser dialog
             File selectedDirectory = directoryChooser.showDialog(new Stage());
             try {
-                FileOutputStream fileOut = new FileOutputStream(selectedDirectory.getPath()+"\\SauvegardeProjet.ser");
-
+                FileOutputStream fileOut = new FileOutputStream(selectedDirectory.getPath()+"\\SauvegardeProjet"+ Integer.toString(compteur) +".ser");
+                compteur++;
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(gc.getCps());
                 out.close();
