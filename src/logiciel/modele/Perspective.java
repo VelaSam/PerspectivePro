@@ -6,6 +6,26 @@ import logiciel.vue.AbstractPanneau;
 
 import java.io.Serializable;
 
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: CurrentProjectState.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-03-24
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-03-24 Implementation de la classe
+
+
+ *******************************************************/
+
 public class Perspective extends Subject implements Serializable {
 
     private transient ImageView imageView;

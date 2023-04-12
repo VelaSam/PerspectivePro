@@ -10,6 +10,25 @@ import logiciel.modele.ImageContainer;
 import java.io.File;
 import java.net.MalformedURLException;
 
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: Observateur.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-04
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-04-4 Implementation de la classe
+ *******************************************************/
+
 public class CommandeCharger implements Commande{
     @Override
     public void execute() {

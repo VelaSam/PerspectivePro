@@ -13,6 +13,24 @@ import logiciel.vue.VerticalBoxPrincipal;
 import java.io.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: Controleur.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-05
+ ******************************* ********************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-04-05 Implementation de la classe
+ *******************************************************/
 public class Controleur {
 
     private VerticalBoxPrincipal vbp;

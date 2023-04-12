@@ -1,8 +1,29 @@
 package logiciel.vue;
 
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: AbstractPanneau.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-05
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-03-24 Changements mineurs
+ 2023-04-05 Finalisation de la classe
+
+
+ *******************************************************/
 
 public abstract class AbstractPanneau extends BorderPane{
     public final static int WIDTH = 480;

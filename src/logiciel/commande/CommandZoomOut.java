@@ -3,7 +3,24 @@ package logiciel.commande;
 import javafx.scene.input.ScrollEvent;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.modele.CurrentProjectState;
-import logiciel.vue.AbstractPanneau;
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: CommandeZoomOut.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-03-30
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-03-30 Implementation de la classe
+ *******************************************************/
 
 public class CommandZoomOut implements Commande {
 

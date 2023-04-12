@@ -78,14 +78,6 @@ legend top left
     class CommandRedo #F5B0CB implements Commande{
         +execute()
     }
-
-    class CommandSetMilieu #F5B0CB implements Commande{
-        +execute()
-    }
-
-    class CommandSetDroite #F5B0CB implements Commande{
-        +execute()
-    }
     '-----------COMMAND--------------'
 
 

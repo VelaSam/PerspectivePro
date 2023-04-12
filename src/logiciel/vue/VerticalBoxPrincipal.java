@@ -15,6 +15,28 @@ import javafx.stage.Stage;
 import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
 
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: PanneauDynamique.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-07
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-04-06 debut dimplmentation
+ 2023-04-07 changements types de boutons
+
+
+ *******************************************************/
+
 public class VerticalBoxPrincipal extends VBox implements Observer {
 
 

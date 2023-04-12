@@ -1,9 +1,7 @@
 package logiciel.controleur;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import logiciel.modele.CurrentProjectState;
 import logiciel.modele.ImageContainer;
@@ -12,7 +10,30 @@ import logiciel.vue.PanneauDynamique;
 import logiciel.vue.PanneauStatique;
 import logiciel.vue.VerticalBoxPrincipal;
 
-import java.io.File;
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: Start.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-01
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-03-25 Implementation de la classe
+ 2023-04-01 Derniers changements
+
+
+ *******************************************************/
+
+
+
 
 public class Start extends Application {
 
