@@ -64,6 +64,8 @@ public class Controleur {
             GestionnaireCommande gc = GestionnaireCommande.getInstance();
             MementoIF memento = gc.getCps().save();
             gc.getPileDeCommande().add(memento);
+            //vbp.getPanneauMilieu().getPerspective().setPositionX((vbp.getPanneauMilieu().getPerspective().getImageView().getImage().getHeight()*vbp.getPanneauMilieu().getPerspective().getZoomPourcentage())/2);
+            //vbp.getPanneauMilieu().getPerspective().setPositionY((vbp.getPanneauMilieu().getPerspective().getImageView().getImage().getWidth()*vbp.getPanneauMilieu().getPerspective().getZoomPourcentage())/2);
 
             ecartHM.set(vbp.getPanneauMilieu().getPerspective().getImageView().getX()-e.getX());
             ecartVM.set(vbp.getPanneauMilieu().getPerspective().getImageView().getY()-e.getY());
@@ -80,12 +82,12 @@ public class Controleur {
         });
 
         vbp.getPanneauMilieu().getPerspective().getImageView().setOnMouseDragged(e->{
-            this.setCommande(new CommandTranslate(e, vbp.getPanneauMilieu().getPerspective().getImageView(),ecartHM.get(), ecartVM.get()));
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauMilieu().getPerspective(),ecartHM.get(), ecartVM.get()));
             this.executeCommand();
         });
 
         vbp.getPanneauDroite().getPerspective().getImageView().setOnMouseDragged(e->{
-            this.setCommande(new CommandTranslate(e, vbp.getPanneauDroite().getPerspective().getImageView(),ecartHD.get(),ecartVD.get()));
+            this.setCommande(new CommandTranslate(e, vbp.getPanneauDroite().getPerspective(),ecartHD.get(),ecartVD.get()));
             this.executeCommand();
         });
 

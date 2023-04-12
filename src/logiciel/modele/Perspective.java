@@ -2,6 +2,7 @@ package logiciel.modele;
 
 import javafx.scene.image.ImageView;
 import logiciel.observateur.Subject;
+import logiciel.vue.AbstractPanneau;
 
 import java.io.Serializable;
 
@@ -14,9 +15,11 @@ public class Perspective extends Subject implements Serializable {
 
     public Perspective(ImageView imageView) {
         this.imageView = imageView;
-        positionX = 0;
-        positionY = 0;
+        positionX = this.imageView.getX();
+        positionY = this.imageView.getY();
         zoomPourcentage =1;
+        this.imageView.setFitWidth(this.imageView.getImage().getWidth());
+        this.imageView.setFitHeight(this.imageView.getImage().getHeight());
     }
 
     public Perspective clone() {
@@ -49,7 +52,12 @@ public class Perspective extends Subject implements Serializable {
     }
 
     public void setPositionX(double positionX) {
-        this.positionX = positionX;
+        if(positionX >= 0 && positionX+imageView.getFitWidth() <= AbstractPanneau.WIDTH){
+            this.positionX = positionX;
+            this.imageView.setX(positionX);
+        }
+
+
     }
 
     public double getPositionY() {
@@ -57,7 +65,11 @@ public class Perspective extends Subject implements Serializable {
     }
 
     public void setPositionY(double positionY) {
-        this.positionY = positionY;
+        if(positionY>=0 && positionY+ imageView.getFitHeight()<= AbstractPanneau.HEIGHT){
+            this.positionY = positionY;
+            this.imageView.setY(positionY);
+        }
+
     }
 
     public double getZoomPourcentage() {
