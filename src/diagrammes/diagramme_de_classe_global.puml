@@ -1,7 +1,7 @@
 @startuml
 
 
-'skinparam backgroundColor #EEEBDC
+skinparam backgroundColor #EEEBDC
 
 legend top left
  |= Color  |= Package |
@@ -50,6 +50,8 @@ legend top left
         -ecartH: double
         -ecartV: double
 
+        +CommandTranslate(e: MouseEvent,
+        iV: ImageView, eH: double, eV: double)
         +execute()
     }
 
@@ -57,6 +59,7 @@ legend top left
         -e: ScrollEvent
         -perspective: int
 
+        +CommandZoomIn(e: ScrollEvent, p: int)
         +execute()
     }
 
@@ -64,6 +67,7 @@ legend top left
         +e: ScrollEvent
         -perspective: int
 
+        +CommandZoomOut(e: ScrollEvent, p: int)
         +execute()
     }
 
@@ -74,17 +78,28 @@ legend top left
     class CommandRedo #F5B0CB implements Commande{
         +execute()
     }
+
+    class CommandSetMilieu #F5B0CB implements Commande{
+        +execute()
+    }
+
+    class CommandSetDroite #F5B0CB implements Commande{
+        +execute()
+    }
     '-----------COMMAND--------------'
 
 
     '-----------SINGLETON--------------'
     class GestionnaireCommande #dea2eb{
         -instance: GestionnaireCommande
-        -cps: CurrentProjectState
+        -cps: currentProjectState
         -pileDeCommande: Stack<MementoIF>
         -pileDeUndo: Stack<MementoIF>
         -verticalBoxPrincipal: VerticalBoxPrincipal
 
+        -GestionnaireCommande()
+        +{static} getInstance(): GestionnaireCommande
+        +{static} setInstance(i: GestionnaireCommande)
         +undo(): MementoIF
         +redo(): MementoIF
     }
@@ -106,6 +121,9 @@ legend top left
         -yImageDroite: double
         -zoomPourcentageImageMilieu: double
         -zoomPourcentageImageDroite: double
+
+        +Memento(c: ImageContainer,
+        pM: Perspective, pD: Perspective)
     }
     '-----------MEMENTO--------------'
 
@@ -117,14 +135,18 @@ legend top left
         -perspectiveDroite: Perspective
         -currentProjectImageContainer: ImageContainer
 
+        +CurrentProjectState(c: ImageContainer,
+        pM: Perspective, pD: Perspective)
         +save(): MementoIF
         +restore()
+        +getBack()
     }
 
     class ImageContainer #a2c5eb extends Subject {
         -path: String
         -image: ImageView
 
+        +ImageContainer(path: String)
         +close(): ImageContainer
         +changeImage(path: String)
     }
@@ -135,6 +157,7 @@ legend top left
         -positionY: double
         -zoomPourcentage: double
 
+        +Perspective(iv: ImageView)
         +close(): Perspective
         +changeImage(p: String)
     }
@@ -149,8 +172,8 @@ legend top left
         -ecartHD: AtomicReference<Double>
         -ecartVD: AtomicReference<Double>
 
+        +Controleur(vbp: VerticalBoxPrincipal)
         +setCommand(c: Commande)
-        +getVbp(): VerticalBoxPrincipal
         +initActionButtons()
         +executeCommand()
         +initSauvegarde()
@@ -175,35 +198,44 @@ legend top left
     }
 
     class VerticalBoxPrincipal #42b883 implements Observer {
+
         -panneauDImages: HBox
         -panneauGauche: PanneauStatique
         -panneauMilieu: PanneauDynamique
         -panneauDroite: PanneauDynamique
+
         -barreSelection: MenuBar
-        -file: Menu
+
         -boutonSauvegarde: MenuItem
-        -boutonchargerImage: MenuItem
-        -boutonChargerProjet: MenuItem
-        -sectionBas: HBox
+        -boutonCharger: MenuItem
+
         -boutonUndo: Button
         -boutonRedo: Button
 
+        +VerticalBoxPrincipal(s: Stage, ps: PanneauStatique,
+        pdM: PanneauDynamique, pdD: PanneauDynamique)
         +update(s: Subject)
     }
 
     class PanneauStatique #42b883 extends AbstractPanneau implements Observer{
-        -imageContainer: ImageContainer
 
+        -image: Image
+        -imageView: ImageView
+
+        +PanneauStatique(ic: ImageContainer)
         +update(s: Subject)
     }
 
     class PanneauDynamique #42b883 extends AbstractPanneau implements Observer{
         -paneBackground: Border
         -perspective: Perspective
+        -setStrategy: Strategy
 
+        +PanneauDynamique(p: Perspective)
         +update(s: Subject)
     }
     '-------------VUE--------------'
+
 
    Observer --o Subject
    Controleur -> GestionnaireCommande : Utilise
@@ -231,9 +263,6 @@ legend top left
    PanneauStatique o---- ImageContainer
 
    CurrentProjectState --> GestionnaireCommande : Utilise
-
-
-
 
 
 
