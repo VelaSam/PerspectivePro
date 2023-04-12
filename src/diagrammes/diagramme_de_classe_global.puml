@@ -128,9 +128,8 @@ legend top left
     '-----------MEMENTO--------------'
 
     '----------MODELE-----------------'
-    class CurrentProjectState #a2c5eb implements Subject {
+    class CurrentProjectState #a2c5eb extends Subject {
 
-        -currentPerspective: int
         -perspectiveMilieu: Perspective
         -perspectiveDroite: Perspective
         -currentProjectImageContainer: ImageContainer
@@ -165,6 +164,7 @@ legend top left
 
     '---------CONTROLEUR--------------'
     class Controleur #dea2eb{
+        -{static} compteurSave: int
         -commande: Commande
         -vbp: VerticalBoxPrincipal
         -ecartHM: AtomicReference<Double>
