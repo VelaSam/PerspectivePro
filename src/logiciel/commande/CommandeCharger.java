@@ -5,10 +5,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import logiciel.controleur.GestionnaireCommande;
 import logiciel.memento.MementoIF;
-import logiciel.modele.ImageContainer;
 
 import java.io.File;
-import java.net.MalformedURLException;
 
 
 /******************************************************
@@ -30,6 +28,11 @@ import java.net.MalformedURLException;
  *******************************************************/
 
 public class CommandeCharger implements Commande{
+
+
+    /**
+     * Execute le processus de selection et chargement des images pour lapplication
+     */
     @Override
     public void execute() {
 

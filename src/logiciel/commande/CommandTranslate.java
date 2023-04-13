@@ -36,6 +36,9 @@ public class CommandTranslate implements Commande {
         this.ecartV = ecartV;
     }
 
+    /**
+     * Commande qui permet de glisser limage sur sa perspective respective
+     */
     @Override
     public void execute() {
         GestionnaireCommande gc = GestionnaireCommande.getInstance();

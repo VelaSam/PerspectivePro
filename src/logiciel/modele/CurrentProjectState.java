@@ -61,6 +61,13 @@ public class CurrentProjectState extends Subject implements Serializable {
        return new Memento(currentProjectImageContainer, perspectiveMilieu, perspectiveDroite);
     }
 
+
+    /**
+     * Restaure l'état précédent des perspectives milieu et droite ainsi que de l'image du projet en cours
+     * à partir d'un memento. Met à jour les positions, les tailles et les images des perspectives en
+     * fonction des données contenues dans le memento.
+     *
+     */
     public void restore(){
         ImageView IVDroite;
         ImageView IVMilieu;
@@ -99,6 +106,11 @@ public class CurrentProjectState extends Subject implements Serializable {
 
     }
 
+    /**
+     Restaure l'état suivant des perspectives milieu et droite ainsi que de l'image du projet en cours
+     à partir d'un memento. Met à jour les positions, les tailles et les images des perspectives en
+     fonction des données contenues dans le memento.
+    */
     public void getBack(){
 
         GestionnaireCommande gestionnaireCommande = GestionnaireCommande.getInstance();
@@ -191,6 +203,14 @@ public class CurrentProjectState extends Subject implements Serializable {
         private double zoomPourcentageImageMilieu;
         private double zoomPourcentageImageDroite;
 
+
+        /**
+         * Cree une copie en copiant les variables
+         *
+         * @param currentProjectImageContainer
+         * @param perspectiveMilieu
+         * @param perspectiveDroite
+         */
 
         public Memento(ImageContainer currentProjectImageContainer, Perspective perspectiveMilieu, Perspective perspectiveDroite) {
 

@@ -44,6 +44,14 @@ public class Start extends Application {
         launch(args);
     }
 
+
+    /**
+     * Démarre l'application et initialise les éléments de l'interface utilisateur. Crée les instances des
+     * perspectives milieu et droite, ainsi que les panneaux statique et dynamiques associés. Initialise
+     * également le gestionnaire de commandes et les observateurs pour les images.
+     * @param primaryStage le stage principal de l'application
+     * @throws Exception en cas d'erreur lors de l'exécution
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
 

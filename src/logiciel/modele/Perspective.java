@@ -42,6 +42,11 @@ public class Perspective extends Subject implements Serializable {
         this.imageView.setFitHeight(this.imageView.getImage().getHeight());
     }
 
+
+    /**
+     * clone en copiant les variables
+     * @return nouvelle perspective
+     */
     public Perspective clone() {
 
         ImageView newImageView = new ImageView(this.imageView.getImage());

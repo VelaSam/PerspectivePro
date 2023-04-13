@@ -51,7 +51,6 @@ public class ImageContainer  extends Subject implements Serializable {
         this.image = new ImageView("file:/"+path);
         this.path = path;
 
-
     }
 
     public ImageView getImageView(){

@@ -55,6 +55,16 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     private Button boutonRedo;
 
 
+    /**
+     Construit un nouvel objet VerticalBoxPrincipal avec une barre de menus, trois panneaux pour les images et des boutons undo/redo.
+     Définit le style, l'espacement et l'arrière-plan pour chaque élément et les ajoute au VerticalBoxPrincipal.
+     Configure la scène principale et l'affiche.
+
+     @param primaryStage La fenêtre principale de l'application.
+     @param ps Le PanneauStatique qui affiche l'image du projet en cours.
+     @param pdMilieu Le PanneauDynamique qui affiche l'image avec la perspective milieu.
+     @param pdDroite Le PanneauDynamique qui affiche l'image avec la perspective droite.
+     */
     public VerticalBoxPrincipal(Stage primaryStage,PanneauStatique ps, PanneauDynamique pdMilieu, PanneauDynamique pdDroite){
 
         Background rootBackground = new Background(new BackgroundFill(Color.SILVER, null, null));

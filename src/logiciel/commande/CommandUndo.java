@@ -19,10 +19,12 @@ package logiciel.commande;
  *******************************************************/
 
 import logiciel.controleur.GestionnaireCommande;
-import logiciel.modele.CurrentProjectState;
 
 public class CommandUndo implements Commande {
 
+    /**
+     * Commande qui permet de defaire laction effectuee par lutilisateur
+     */
     @Override
     public void execute() {
 

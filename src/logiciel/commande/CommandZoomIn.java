@@ -34,6 +34,10 @@ public class CommandZoomIn implements Commande{
         this.e = e;
         this.perspective = perspective;
     }
+
+    /**
+     * Commande qui permettant dagrandir la perspective selon laction de lutilisateur
+     */
     @Override
     public void execute() {
         //Grand problème, car utilisation de hard codage

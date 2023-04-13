@@ -56,10 +56,6 @@ public class Controleur {
         commande.execute();
     }
 
-    public void initSauvegarde(){
-        //TODO: cette methode
-    }
-
     public void setCommande(Commande commande) {
         this.commande = commande;
     }
@@ -71,6 +67,13 @@ public class Controleur {
     public VerticalBoxPrincipal getVbp() {
         return vbp;
     }
+
+
+    /**
+     Initialise les actions des boutons et des événements liés aux images des perspectives milieu et droite.
+     Permet de charger une image, déplacer et zoomer les images, annuler et refaire des actions, sauvegarder
+     et charger un projet en cours.
+     */
 
     private void initActionButtons(){
     // Initialiser tout les actions des boutons de VBP

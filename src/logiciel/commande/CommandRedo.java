@@ -20,6 +20,11 @@ import logiciel.controleur.GestionnaireCommande;
  2023-04-04 Implementation de la classe
  *******************************************************/
 
+
+/**
+ * Commande qui permet de reinitialiser letat du logiciel avant que lutilisateur puisse cliquer sur undo
+ */
+
 public class CommandRedo implements Commande{
     @Override
     public void execute() {

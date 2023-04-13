@@ -32,6 +32,9 @@ public class CommandZoomOut implements Commande {
         this.e = e;
         this.perspective = perspective;
     }
+    /**
+     * Commande qui permettant de retrecir la perspective selon laction de lutilisateur
+     */
     @Override
     public void execute() {
         GestionnaireCommande gc = GestionnaireCommande.getInstance();

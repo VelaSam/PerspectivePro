@@ -43,19 +43,12 @@ public class GestionnaireCommande {
 
     public static GestionnaireCommande getInstance(){
 
-        if(instance == null){
-
-            return instance = new GestionnaireCommande();
-
-        }
-        return instance;
+        return instance == null ? instance = new GestionnaireCommande(): instance;
 
     }
 
     public MementoIF undo(){
         if(!this.pileDeCommande.empty()){
-
-//            this.pileDeUndo.add(pileDeCommande.peek());
 
             return pileDeCommande.pop();
 
@@ -66,7 +59,6 @@ public class GestionnaireCommande {
     public MementoIF redo(){
         if(!this.pileDeUndo.empty()){
 
-//            this.pileDeCommande.add(pileDeUndo.peek());
             return pileDeUndo.pop();
         }
         return null;
