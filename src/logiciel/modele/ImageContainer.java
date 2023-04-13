@@ -40,6 +40,8 @@ public class ImageContainer  extends Subject implements Serializable {
     public ImageContainer(String path) {
         this.path = path;
         this.image = new ImageView("file:/"+this.path);
+        this.image.setFitWidth(image.getImage().getWidth());
+        this.image.setFitHeight(image.getImage().getHeight());
     }
 
     public ImageContainer clone() {

@@ -2,6 +2,7 @@ package logiciel.commande;
 
 import javafx.scene.input.ScrollEvent;
 import logiciel.controleur.GestionnaireCommande;
+import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
 
 /******************************************************
@@ -38,6 +39,7 @@ public class CommandZoomOut implements Commande {
     @Override
     public void execute() {
         GestionnaireCommande gc = GestionnaireCommande.getInstance();
+        MementoIF memento;
 
         if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_MILIEU){
             //seulement dezoomer si le zoompourcentage reste plus grand que 0
@@ -48,6 +50,9 @@ public class CommandZoomOut implements Commande {
                 );
                 gc.getCps().getPerspectiveMilieu().getImageView().setFitWidth(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getWidth()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
                 gc.getCps().getPerspectiveMilieu().getImageView().setFitHeight(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getHeight()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
+                memento = gc.getCps().save();
+
+                gc.getPileDeCommande().add(memento);
             }
         } else if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_DROITE){
             if(gc.getCps().getPerspectiveDroite().getZoomPourcentage()-0.05 > 0){

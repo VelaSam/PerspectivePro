@@ -2,6 +2,7 @@ package logiciel.commande;
 
 import javafx.scene.input.ScrollEvent;
 import logiciel.controleur.GestionnaireCommande;
+import logiciel.memento.MementoIF;
 import logiciel.modele.CurrentProjectState;
 import logiciel.vue.AbstractPanneau;
 
@@ -42,6 +43,7 @@ public class CommandZoomIn implements Commande{
     public void execute() {
         //Grand problème, car utilisation de hard codage
         GestionnaireCommande gc = GestionnaireCommande.getInstance();
+        MementoIF memento;
 
         if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_MILIEU
         && gc.getCps().getPerspectiveMilieu().getZoomPourcentage()+0.05 > 0
@@ -61,6 +63,9 @@ public class CommandZoomIn implements Commande{
                 gc.getCps().getPerspectiveMilieu().getImageView().setFitWidth(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getWidth()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
                 gc.getCps().getPerspectiveMilieu().getImageView().setFitHeight(gc.getCps().getPerspectiveMilieu().getImageView().getImage().getHeight()*gc.getCps().getPerspectiveMilieu().getZoomPourcentage());
 
+                memento = gc.getCps().save();
+
+                gc.getPileDeCommande().add(memento);
         } else if(perspective == CurrentProjectState.CURRENT_PERSPECTIVE_DROITE &&
                 gc.getCps().getPerspectiveDroite().getZoomPourcentage()+0.05 > 0
                 && gc.getCps().getPerspectiveDroite().getPositionX()
@@ -76,7 +81,9 @@ public class CommandZoomIn implements Commande{
                 );
                 gc.getCps().getPerspectiveDroite().getImageView().setFitWidth(gc.getCps().getPerspectiveDroite().getImageView().getImage().getWidth()*gc.getCps().getPerspectiveDroite().getZoomPourcentage());
                 gc.getCps().getPerspectiveDroite().getImageView().setFitHeight(gc.getCps().getPerspectiveDroite().getImageView().getImage().getHeight()*gc.getCps().getPerspectiveDroite().getZoomPourcentage());
+                memento = gc.getCps().save();
 
+                gc.getPileDeCommande().add(memento);
         }
     }
 }
