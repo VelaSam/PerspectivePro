@@ -1,0 +1,112 @@
+@startuml
+activate Start
+Start -> PanneauDinamique :new PanneauDinamique()
+activate PanneauDinamique
+
+PanneauDinamique -> AbstractPanneau : super()
+activate AbstractPanneau
+PanneauDinamique -> AbstractPanneau : super.getChildren().add()
+AbstractPanneau -> Perspective : getImageView()
+activate Perspective
+Perspective --> AbstractPanneau
+deactivate Perspective
+deactivate AbstractPanneau
+
+PanneauDinamique --> Start
+deactivate PanneauDinamique
+
+deactivate Start
+
+activate Button 
+Button -> Controleur: setCommande()
+activate Controleur
+Button  -> Controleur: executeCommand()
+deactivate Button
+Controleur -> Commande : execute()
+activate Commande 
+deactivate Controleur
+Commande -> CommandUndo :execute()
+deactivate Commande
+
+
+activate CommandUndo
+CommandUndo -> GestionnaireCommande : getInstance()
+activate GestionnaireCommande
+GestionnaireCommande --> CommandUndo
+CommandUndo -> GestionnaireCommande : getCps()
+GestionnaireCommande --> CommandUndo
+deactivate GestionnaireCommande
+
+CommandUndo -> CurrentProjectState : restore()
+deactivate CommandUndo
+activate CurrentProjectState
+CurrentProjectState -> GestionnaireCommande : getInstance()
+activate GestionnaireCommande 
+GestionnaireCommande --> CurrentProjectState
+CurrentProjectState -> GestionnaireCommande : undo()
+GestionnaireCommande --> CurrentProjectState
+deactivate GestionnaireCommande
+
+Activate Perspective
+CurrentProjectState -> Perspective : getImageView()
+Perspective --> CurrentProjectState
+CurrentProjectState -> Perspective : getImageView()
+Perspective --> CurrentProjectState
+deactivate Perspective
+CurrentProjectState -> ImageContainer: getImageView()
+Activate ImageContainer
+ImageContainer --> CurrentProjectState
+deactivate ImageContainer
+
+CurrentProjectState -> Memento : getImagePath()
+activate Memento
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setImage()
+Activate ImageView 
+CurrentProjectState -> Memento : getImagePath()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setImage()
+CurrentProjectState -> Memento : getImagePath()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setImage()
+
+CurrentProjectState -> Memento : getxImageDroite()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setX()
+CurrentProjectState -> Memento : getyImageDroite()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setY()
+deactivate ImageView
+
+CurrentProjectState -> Memento : getZoomPourcentageImageDroite()
+Memento --> CurrentProjectState
+activate Perspective
+CurrentProjectState -> Perspective : setZoomPourcentage()
+deactivate Perspective
+
+
+
+CurrentProjectState -> Memento : getxImageMilieu()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setX()
+activate ImageView
+CurrentProjectState -> Memento : getyImageMilieu()
+Memento --> CurrentProjectState
+CurrentProjectState -> ImageView : setY()
+deactivate ImageView
+
+CurrentProjectState -> Memento : getZoomPourcentageImageMilieu()
+Memento --> CurrentProjectState
+deactivate Memento
+activate Perspective
+CurrentProjectState -> Perspective : setZoomPourcentage()
+deactivate Perspective
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,68 @@
+@startuml
+activate Start
+Start -> PanneauDinamique :new PanneauDinamique()
+activate PanneauDinamique
+
+PanneauDinamique -> AbstractPanneau : super()
+activate AbstractPanneau
+PanneauDinamique -> AbstractPanneau : super.getChildren().add()
+AbstractPanneau -> Perspective : getImageView()
+activate Perspective
+Perspective --> AbstractPanneau
+deactivate Perspective
+deactivate AbstractPanneau
+
+PanneauDinamique --> Start
+deactivate PanneauDinamique
+
+deactivate Start
+
+activate ImageView
+ImageView -> Controleur: setCommande()
+activate Controleur
+ImageView -> Controleur: executeCommand()
+deactivate ImageView
+
+Controleur -> Commande : execute()
+activate Commande 
+deactivate Controleur
+Commande -> CommandTranslate :execute()
+activate CommandTranslate
+deactivate Commande
+
+CommandTranslate -> GestionnaireCommande: getInstance()
+activate GestionnaireCommande 
+GestionnaireCommande --> CommandTranslate
+deactivate GestionnaireCommande
+
+CommandTranslate -> MouseEvent : getX()
+activate MouseEvent 
+MouseEvent --> CommandTranslate
+
+CommandTranslate -> MouseEvent : getY()
+MouseEvent --> CommandTranslate
+deactivate MouseEvent
+
+
+CommandTranslate -> Perspective: setPositionX()
+activate Perspective
+opt "not out of border"
+    Perspective -> ImageView : setX()
+    activate ImageView
+    deactivate ImageView
+end
+ 
+
+CommandTranslate -> Perspective: setPositionY()
+deactivate CommandTranslate
+opt "not out of border"
+    Perspective -> ImageView : setY()
+    activate ImageView
+    deactivate ImageView
+end
+deactivate Perspective
+
+
+
+
+@enduml

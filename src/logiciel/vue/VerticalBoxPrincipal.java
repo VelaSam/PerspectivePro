@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
@@ -15,8 +14,28 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import logiciel.observateur.Observer;
 import logiciel.observateur.Subject;
-import logiciel.modele.ImageContainer;
-import logiciel.modele.Perspective;
+
+
+/******************************************************
+ Cours:   LOG121
+ Session: H2023
+ Groupe:  04
+ Projet: Laboratoire #2
+ Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
+
+ Charge de laboratoire: Bilal Alchalibi
+ Nom du fichier: PanneauDynamique.java
+ Date creee: 2023-03-22
+ Date dern. modif. 2023-04-07
+ ***************************************************
+ Historique des modifications
+ ***************************************************
+ 2023-03-22 Creation de la classe
+ 2023-04-06 debut dimplmentation
+ 2023-04-07 changements types de boutons
+
+
+ *******************************************************/
 
 public class VerticalBoxPrincipal extends VBox implements Observer {
 
@@ -28,13 +47,24 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     private MenuBar barreSelection;
     private Menu file;
     private MenuItem boutonSauvegarde;
-    private MenuItem boutonCharger;
+    private MenuItem boutonChargerImage;
+    private MenuItem boutonChargerProjet;
 
     private HBox sectionBas;
     private Button boutonUndo;
     private Button boutonRedo;
 
 
+    /**
+     Construit un nouvel objet VerticalBoxPrincipal avec une barre de menus, trois panneaux pour les images et des boutons undo/redo.
+     Définit le style, l'espacement et l'arrière-plan pour chaque élément et les ajoute au VerticalBoxPrincipal.
+     Configure la scène principale et l'affiche.
+
+     @param primaryStage La fenêtre principale de l'application.
+     @param ps Le PanneauStatique qui affiche l'image du projet en cours.
+     @param pdMilieu Le PanneauDynamique qui affiche l'image avec la perspective milieu.
+     @param pdDroite Le PanneauDynamique qui affiche l'image avec la perspective droite.
+     */
     public VerticalBoxPrincipal(Stage primaryStage,PanneauStatique ps, PanneauDynamique pdMilieu, PanneauDynamique pdDroite){
 
         Background rootBackground = new Background(new BackgroundFill(Color.SILVER, null, null));
@@ -44,10 +74,11 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
 
         barreSelection = new MenuBar();
         file = new Menu("File");
-        boutonCharger = new MenuItem("Charger");
+        boutonChargerImage = new MenuItem("Charger Image");
         boutonSauvegarde = new MenuItem("Sauvegarder");
+        boutonChargerProjet = new MenuItem("Charger Projet");
 
-        file.getItems().addAll(boutonSauvegarde,boutonCharger);
+        file.getItems().addAll(boutonSauvegarde, boutonChargerImage, boutonChargerProjet);
         barreSelection.getMenus().add(file);
 
 
@@ -109,8 +140,8 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
         return boutonSauvegarde;
     }
 
-    public MenuItem getBoutonCharger() {
-        return boutonCharger;
+    public MenuItem getBoutonChargerImage() {
+        return boutonChargerImage;
     }
 
     public HBox getSectionBas() {
@@ -128,5 +159,9 @@ public class VerticalBoxPrincipal extends VBox implements Observer {
     @Override
     public void update(Subject s) {
 
+    }
+
+    public MenuItem getBoutonChargerProjet() {
+        return boutonChargerProjet;
     }
 }

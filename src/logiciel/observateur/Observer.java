@@ -1,4 +1,4 @@
-package logiciel.commande;
+package logiciel.observateur;
 
 /******************************************************
  Cours:   LOG121
@@ -8,15 +8,17 @@ package logiciel.commande;
  Auteurs: Jonathan Savard, Samuel Velasco, Annie Tremblay
 
  Charge de laboratoire: Bilal Alchalibi
- Nom du fichier: Commande.java
+ Nom du fichier: Observer.java
  Date creee: 2023-03-22
- Date dern. modif. 2023-04-04
+ Date dern. modif. 2023-03-22
  ***************************************************
  Historique des modifications
  ***************************************************
- 2023-02-22 Creation et implementation de la classe
+ 2023-03-22 Creation de la classe
+
+
  *******************************************************/
 
-public interface Commande {
-    void execute();
+public interface Observer {
+   void update(Subject s);
 }
